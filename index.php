@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Generate QR code data
     $codeContents = "$first_name $last_name";
     $tempDir = "images/";
-    $fileName = '005_file_' . uniqid($first_name) . '.png';
+    $fileName = '005_file_' . uniqid() . '.png';
     $pngAbsoluteFilePath = $tempDir . $fileName;
     $urlRelativeFilePath = $tempDir . $fileName;
 
