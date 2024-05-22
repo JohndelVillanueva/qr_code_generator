@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function send_email_with_qr_code($email, $qr_code_path)
 {
     $sender = 'noreply@westfields.edu.ph';
-    $subject = 'E-Ticket: QR Code';
-    $body = 'Please keep the QR code attached.';
+    $subject = 'E-Ticket: QR Code ';
+    $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECIEVED.</b>'; ;
 
     $mail = new PHPMailer(true);
 
