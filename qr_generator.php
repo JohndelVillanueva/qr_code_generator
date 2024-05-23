@@ -1,54 +1,52 @@
 <?php
-require 'vendor/autoload.php'; // Load Composer's autoloader
+    require 'vendor/autoload.php'; // Load Composer's autoloader
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use Picqer\Barcode\BarcodeGeneratorPNG;
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    use Endroid\QrCode\QrCode;
+    use Endroid\QrCode\Writer\PngWriter;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-    $first_name = htmlspecialchars(trim($_POST['first_name']));
-    $last_name = htmlspecialchars(trim($_POST['last_name']));
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $email = $_POST['email'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
 
-    // Validate email address
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email address";
-        exit;
+        // Validate email address
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "Invalid email address";
+            exit;
+        }
+
+        // Generate QR code data
+        $codeContents = "$first_name $last_name";
+        $tempDir = "images/";
+        $fileName = '005_file_' . uniqid() . '.png';
+        $pngAbsoluteFilePath = $tempDir . $fileName;
+        $urlRelativeFilePath = $tempDir . $fileName;
+
+        // generating
+        if (!file_exists($pngAbsoluteFilePath)) {
+            $qrCode = QrCode::create($codeContents);
+            $writer = new PngWriter();
+            $result = $writer->write($qrCode);
+            $result->saveToFile($pngAbsoluteFilePath);
+            // echo 'File generated!<hr />';
+        } else {
+            echo 'File already generated! We can use this cached file to speed up site on common codes!<hr />';
+        }
+        // echo 'Server PNG File: ' . $pngAbsoluteFilePath . '<hr />';
+        // echo '<img src="' . $urlRelativeFilePath . '" /><hr />';
+        // Send email with QR code
+        send_email_with_qr_code($email, $pngAbsoluteFilePath);
     }
 
-    // Validate first and last name
-    if (empty($first_name) || empty($last_name)) {
-        echo "First name and last name are required.";
-        exit;
-    }
+    function send_email_with_qr_code($email, $qr_code_path)
+    {
+        $sender = 'noreply@westfields.edu.ph';
+        $subject = 'E-Ticket: QR Code ';
+        $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECIEVED.</b>';;
 
-    // Generate barcode data
-    $codeContents = "$first_name $last_name";
-    $tempDir = "images/";
-    if (!is_dir($tempDir)) {
-        mkdir($tempDir, 0777, true);
-    }
-    $fileName = '005_file_' . uniqid() . '.png';
-    $pngAbsoluteFilePath = $tempDir . $fileName;
-    $urlRelativeFilePath = $tempDir . $fileName;
-
-    // Generating barcode
-    $generator = new BarcodeGeneratorPNG();
-    $barcode = $generator->getBarcode($codeContents, $generator::TYPE_CODE_128);
-
-    file_put_contents($pngAbsoluteFilePath, $barcode);
-
-    // Send email with barcode
-    send_email_with_barcode($email, $pngAbsoluteFilePath);
-}
-
-function send_email_with_barcode($email, $barcode_path)
-{
-    $sender = 'noreply@westfields.edu.ph';
-    $subject = 'E-Ticket: Barcode';
-    $body = 'Please keep the barcode attached. <b>CHECK THE SPAM OPTION IF THERE IS NO BARCODE RECEIVED.</b>';
-
-    $mail = new PHPMailer(true);
+        $mail = new PHPMailer(true);
 
     try {
         // Server settings
@@ -59,13 +57,14 @@ function send_email_with_barcode($email, $barcode_path)
         $mail->Password = 'kzeh yyam yhfr xrqh'; // Use environment variables or secure storage for passwords
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
+        // $mail->SMTPDebug = 2; // Enable debugging if needed
 
         // Recipients
         $mail->setFrom($sender);
         $mail->addAddress($email);
 
         // Attachments
-        $mail->addAttachment($barcode_path);
+        $mail->addAttachment($qr_code_path);
 
         // Content
         $mail->isHTML(true);
@@ -73,8 +72,10 @@ function send_email_with_barcode($email, $barcode_path)
         $mail->Body = $body;
 
         $mail->send();
-        header('Location: index.php');
-        exit();
+        header('location: index.php');
+//  echo "<div class='alert alert-success text-center'>Success!</div>";
+
+        
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
