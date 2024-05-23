@@ -46,7 +46,7 @@ function send_email_with_qr_code($email, $qr_code_path)
 {
     $sender = 'noreply@westfields.edu.ph';
     $subject = 'E-Ticket: QR Code ';
-    $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECIEVED.</b>'; ;
+    $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECIEVED.</b>';;
 
     $mail = new PHPMailer(true);
 
@@ -90,16 +90,22 @@ function send_email_with_qr_code($email, $qr_code_path)
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 
-<body>
-    <form method="post" action="">
-        <label for="first_name">First Name:</label><br>
-        <input type="text" id="first_name" name="first_name"><br><br>
-        <label for="last_name">Last Name:</label><br>
-        <input type="text" id="last_name" name="last_name"><br><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
-        <input type="submit" value="Send QR Code">
-    </form>
+<body class="bg-secondary-subtle">
+    <div class="wrapper d-flex justify-content-center align-items-center vh-100">
+        <div class="container border border-2 border-black py-5 text-bg-dark">
+            <form method="post" action="">
+                <h1 class="text-center">QR Code Generator</h1>
+                <label for="first_name">First Name:</label><br>
+                <input class="form-control form-control-lg rounded-0" type="text" id="first_name" name="first_name"><br><br>
+                <label for="last_name">Last Name:</label><br>
+                <input class="form-control form-control-lg rounded-0" type="text" id="last_name" name="last_name"><br><br>
+                <label for="email">Email:</label><br>
+                <input class="form-control form-control-lg rounded-0" type="email" id="email" name="email"><br><br>
+                <div class="d-flex justify-content-center ">
+                <input class="btn btn-outline-light btn-lg rounded-0" type="submit" value="Send QR Code">
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
-
 </html>
