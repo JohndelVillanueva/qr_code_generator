@@ -16,6 +16,10 @@
             echo "Invalid email address";
             exit;
         }
+        if (empty($first_name) || empty($last_name)) {
+            echo "First name and last name are required.";
+            exit;
+        }
 
         // Generate QR code data
         $codeContents = "$first_name $last_name";
