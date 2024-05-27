@@ -1,56 +1,50 @@
 <?php
-    require 'vendor/autoload.php'; // Load Composer's autoloader
+require 'vendor/autoload.php'; // Load Composer's autoloader
 
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-    use Endroid\QrCode\QrCode;
-    use Endroid\QrCode\Writer\PngWriter;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
 
-        // Validate email address
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo "Invalid email address";
-            exit;
-        }
-        if (empty($first_name) || empty($last_name)) {
-            echo "First name and last name are required.";
-            exit;
-        }
-
-        // Generate QR code data
-        $codeContents = "$first_name $last_name";
-        $tempDir = "images/";
-        $fileName = '005_file_' . uniqid() . '.png';
-        $pngAbsoluteFilePath = $tempDir . $fileName;
-        $urlRelativeFilePath = $tempDir . $fileName;
-
-        // generating
-        if (!file_exists($pngAbsoluteFilePath)) {
-            $qrCode = QrCode::create($codeContents);
-            $writer = new PngWriter();
-            $result = $writer->write($qrCode);
-            $result->saveToFile($pngAbsoluteFilePath);
-            // echo 'File generated!<hr />';
-        } else {
-            echo 'File already generated! We can use this cached file to speed up site on common codes!<hr />';
-        }
-        // echo 'Server PNG File: ' . $pngAbsoluteFilePath . '<hr />';
-        // echo '<img src="' . $urlRelativeFilePath . '" /><hr />';
-        // Send email with QR code
-        send_email_with_qr_code($email, $pngAbsoluteFilePath);
+    // Validate email address
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email address";
+        exit;
+    }
+    if (empty($first_name) || empty($last_name)) {
+        echo "First name and last name are required.";
+        exit;
     }
 
-    function send_email_with_qr_code($email, $qr_code_path)
-    {
-        $sender = 'noreply@westfields.edu.ph';
-        $subject = 'E-Ticket: QR Code ';
-        $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECIEVED.</b>';;
+    // Generate QR code data
+    $codeContents = "$first_name $last_name";
+    $tempDir = "images/";
+    $fileName = '005_file_' . uniqid() . '.png';
+    $pngAbsoluteFilePath = $tempDir . $fileName;
+    $urlRelativeFilePath = $tempDir . $fileName;
 
-        $mail = new PHPMailer(true);
+    // generating
+    $qrCode = QrCode::create($codeContents);
+    $writer = new PngWriter();
+    $result = $writer->write($qrCode);
+    $result->saveToFile($pngAbsoluteFilePath);
+
+    // Send email with QR code
+    send_email_with_qr_code($email, $pngAbsoluteFilePath, $first_name, $last_name);
+}
+
+function send_email_with_qr_code($email, $qr_code_path, $first_name, $last_name)
+{
+    $sender = 'noreply@westfields.edu.ph';
+    $subject = 'E-Ticket: QR Code ';
+    $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECEIVED.</b>';
+
+    $mail = new PHPMailer(true);
 
     try {
         // Server settings
@@ -76,9 +70,7 @@
         $mail->Body = $body;
 
         $mail->send();
-        header('location: index.php');
-//  echo "<div class='alert alert-success text-center'>Success!</div>";
-
+        header("location: print.php?qr_code=$qr_code_path&first_name=$first_name&last_name=$last_name");
         
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

@@ -1,5 +1,7 @@
 <?php
-
+$qr_code = isset($_GET['qr_code']) ? $_GET['qr_code'] : './images/default.png';
+$first_name = isset($_GET['first_name']) ? $_GET['first_name'] : 'John';
+$last_name = isset($_GET['last_name']) ? $_GET['last_name'] : 'Doe';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,23 +35,23 @@
             <!-- . margin between  -->
             <div style="width:14%"></div>
             <div class="col-3 border border-2 border-black p-0">
-                <div><img src="./images/005_file_664dae93bea94.png" alt="qr" class="w-100 h-100"></div>
+                <div><img src="<?php echo $qr_code; ?>" alt="qr" class="w-100 h-100"></div>
             </div>
         </div>
         <br>
-        <div class="row vh-25  p-0 m-0">
+        <div class="row vh-25 p-0 m-0">
             <!-- left margin  -->
             <div style="width:2%"></div>
             <div>
-                <p class="h1 fw-medium text-center border border-2 border-black"> Sample Text for Name Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, nobis?</p>
+                <p class="h1 fw-medium text-center border border-2 border-black"> Sample Text for Name <?php echo $first_name . ' ' . $last_name; ?> </p>
             </div>
         </div>
         <br>
         <br>
-        <div class="row col-12 vh-25 p-0 m-0 ">
+        <div class="row col-12 vh-25 p-0 m-0">
             <!-- left margin  -->
             <div>
-                <p class="h3 fw-medium text-center border border-2 border-black ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus odit vitae eos itaque, necessitatibus unde tempora suscipit doloribus nesciunt laborum esse dolor. Cupiditate, explicabo corporis inventore nobis nam ab numquam aspernatur enim repellat aperiam dolorum aliquam nostrum praesentium repellendus consectetur sapiente labore qui architecto officia, reprehenderit molestias est doloribus? Doloribus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni recusandae inventore aliquid iste fuga voluptates suscipit laboriosam voluptatum, expedita perspiciatis odit non ab sequi</p>
+                <p class="h3 fw-medium text-center border border-2 border-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus odit vitae eos itaque, necessitatibus unde tempora suscipit doloribus nesciunt laborum esse dolor. Cupiditate, explicabo corporis inventore nobis nam ab numquam aspernatur enim repellat aperiam dolorum aliquam nostrum praesentium repellendus consectetur sapiente labore qui architecto officia, reprehenderit molestias est doloribus? Doloribus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni recusandae inventore aliquid iste fuga voluptates suscipit laboriosam voluptatum, expedita perspiciatis odit non ab sequi</p>
             </div>
         </div>
         <br>
@@ -73,27 +75,20 @@
             <!-- . margin between  -->
             <div style="width:14%"></div>
             <div class="col-3 border border-2 border-black p-0">
-                <div><img src="./images/005_file_664e9bb1e1b03.png" alt="qr" class="w-100 h-100"></div>
+                <div><img src="<?php echo $qr_code; ?>" alt="qr" class="w-100 h-100"></div>
             </div>
         </div>
         <br>
         <br>
-        <div class="row vh-25  p-0 m-0">
+        <div class="row vh-25 p-0 m-0">
             <!-- left margin  -->
             <div style="width:2%"></div>
             <div>
-                <p class="h1 fw-medium text-center border border-2 border-black"> Sample Text for Name Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, nobis?</p>
+                <p class="h1 fw-medium text-center border border-2 border-black"> Sample Text for Name <?php echo $first_name . ' ' . $last_name; ?> </p>
             </div>
         </div>
         <br>
-        <div class="row col-12 vh-25 p-0 m-0 ">
+        <div class="row col-12 vh-25 p-0 m-0">
             <!-- left margin  -->
             <div>
-                <p class="h3 fw-medium text-center border border-2 border-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus odit vitae eos itaque, necessitatibus unde tempora suscipit doloribus nesciunt laborum esse dolor. Cupiditate, explicabo corporis inventore nobis nam ab numquam aspernatur enim repellat aperiam dolorum aliquam nostrum praesentium repellendus consectetur sapiente labore qui architecto officia, reprehenderit molestias est doloribus? Doloribus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni recusandae inventore aliquid iste fuga voluptates suscipit laboriosam voluptatum, expedita perspiciatis odit non ab sequi</p>
-            </div>
-        </div>
-        <br>
-    </div>
-</body>
-
-</html>
+                <p class="h3 fw-medium text-center border border-2 border-black">Lorem10
