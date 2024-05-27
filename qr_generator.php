@@ -5,6 +5,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -25,24 +27,115 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $codeContents = "$first_name $last_name";
     $tempDir = "images/";
     $fileName = '005_file_' . uniqid() . '.png';
-    $pngAbsoluteFilePath = $tempDir . $fileName;
-    $urlRelativeFilePath = $tempDir . $fileName;
+    $pngAbsoluteFilePath = $tempDir . $fileName; // Absolute path for saving the QR code
+    $urlRelativeFilePath = $tempDir . $fileName; // Relative path for embedding in HTML
 
-    // generating
+    // Generate QR code
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
     $result->saveToFile($pngAbsoluteFilePath);
 
-    // Send email with QR code
-    send_email_with_qr_code($email, $pngAbsoluteFilePath, $first_name, $last_name);
+    // Generate PDF with the QR code
+    $pdfFilePath = generate_pdf($urlRelativeFilePath, $first_name, $last_name);
+
+    // Send email with PDF attachment
+    send_email_with_pdf($email, $pdfFilePath);
 }
 
-function send_email_with_qr_code($email, $qr_code_path, $first_name, $last_name)
-{
+function generate_pdf($qrCode, $first_name, $last_name) {
+    $dompdf = new Dompdf();
+    $html = '
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ticket</title>
+        <!-- Bootstrap CDN  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!-- Javascript CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+        <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="reset.css">
+        <!-- Custom CSS  -->
+        <style>
+            /* container layout  */
+            .ticket-container {
+                width: 510px;
+                height: 210px;
+                border: 1px solid black;
+            }
+            .qrcode{
+                width:135px;
+                height: 135px;
+            }
+            .bg-custom{
+                background-color:blanchedalmond;
+            }
+            *{
+                color:darkblue;
+            }
+        </style>
+    </head>
+
+    <!-- 492 px for width and 189 px for height  -->
+
+    <body>
+        <div class="d-flex flex-row justify-content-center">
+            <div class="ticket-container bg-custom">
+                <div class="row p-0 m-0 col-12 pt-2">
+                    <div class="col-6">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="p-1">
+                                <img src="../assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
+                            </div>
+                            <div class="border border-1 border-black d-flex flex-column justify-content-evenly align-items-center p-2">
+                                <p class="fw-medium text-wrap text-center m-0 h4"> Into the Woods</p>
+                                <p class="fw-medium text-wrap text-center m-0 h5">Event Center</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex flex-column justify-content-center align-items-end">
+                            <img src="' . $qrCode . '" alt="qr" class="qrcode border border-2 border-black">
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-0 m-0 col-12 pt-1">
+                    <div class="d-flex flex-row justify-content-center p-1">
+                        <div class="col-10">
+                            <p class="fw-medium h5 text-center m-0">Thank you for purchasing!</p>
+                            <p class="fw-medium h5 text-center m-0">Mr. ' . $first_name . ' ' . $last_name . '</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    </html>';
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+
+    $output = $dompdf->output();
+    $pdfFilePath = 'ticket_' . uniqid() . '.pdf';
+    file_put_contents($pdfFilePath, $output);
+
+    return $pdfFilePath;
+}
+
+
+function send_email_with_pdf($email, $pdfFilePath) {
     $sender = 'noreply@westfields.edu.ph';
     $subject = 'E-Ticket: QR Code ';
-    $body = 'Please keep the QR code attached. <b> CHECK THE SPAM OPTION IF THERE IS NO QR RECEIVED.</b>';
+    $body = 'Please keep the attached PDF containing your QR code. <b> CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
 
     $mail = new PHPMailer(true);
 
@@ -62,7 +155,7 @@ function send_email_with_qr_code($email, $qr_code_path, $first_name, $last_name)
         $mail->addAddress($email);
 
         // Attachments
-        $mail->addAttachment($qr_code_path);
+        $mail->addAttachment($pdfFilePath);
 
         // Content
         $mail->isHTML(true);
@@ -70,7 +163,7 @@ function send_email_with_qr_code($email, $qr_code_path, $first_name, $last_name)
         $mail->Body = $body;
 
         $mail->send();
-        header("location: print.php?qr_code=$qr_code_path&first_name=$first_name&last_name=$last_name");
+        echo "Email has been sent successfully.";
         
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
