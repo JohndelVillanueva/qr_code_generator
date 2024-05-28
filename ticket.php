@@ -17,19 +17,55 @@
     <style>
         /* container layout  */
         .ticket-container {
-            width: 510px;
-            height: 210px;
+            width: 610px;
+            /* height: 230px; */
             border: 1px solid black;
         }
-        .qrcode{
-            width:135px;
-            height: 135px;
+
+        .qrcode {
+            width: 254px;
+            min-width: 214px;
+            min-height: 200px;
         }
-        .bg-custom{
-            background-color:blanchedalmond;
+
+        .bg-custom {
+            background-color: blanchedalmond;
         }
-        *{
-            color:darkblue;
+
+        * {
+            color: darkblue;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.1;
+            margin: 0;
+        }
+
+        /* Custom CSS Mobile Port  */
+        .ticket-mobile-container {
+            width: 100%;
+            min-height: 800px;
+            max-height: 800px;
+        }
+
+        div.details {
+            writing-mode: vertical-lr;
+        }
+
+        .details>p {
+            text-orientation: mixed;
+        }
+
+        img.qrcode-mobile {
+            transform: rotate(90deg);
+        }
+
+        .qrcode-mobile {
+            min-width: 200px;
+            min-height: 200px;
+            max-width: 300px;
+            /* writing-mode: vertical-lr; */
         }
     </style>
 </head>
@@ -37,37 +73,41 @@
 <!-- 492 px for width and 189 px for height  -->
 
 <body>
-    <div class="d-flex flex-row justify-content-center">
-        <div class="ticket-container bg-custom">
-            <div class="row p-0 m-0 col-12 pt-2">
-                <div class="col-6">
+    <!-- Webport  -->
+    <div class="ticket-wrapper d-flex flex-row justify-content-center">
+        <div class="ticket-container bg-custom h-auto text-wrap">
+
+            <div class="row p-0 m-0 col-12 py-2">
+                <div class="col-sm-7 col-12 text-center">
                     <div class="d-flex flex-column justify-content-center align-items-center">
-                        <div class="p-1">
+
+                        <div>
                             <img src="./assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
                         </div>
-                        <div class="border border-1 border-black d-flex flex-column justify-content-evenly align-items-center p-2">
-                            <p class="fw-medium text-wrap text-center m-0 h4"> Into the Woods</p>
-                            <p class="fw-medium text-wrap text-center m-0 h5">Event Center</p>
+
+                        <div class="d-flex flex-column justify-content-center align-items-center p-0 pb-2 w-100">
+                            <p class="fw-medium h5"> What: Into the Woods</p>
+                            <p class="fw-medium h5">Where: Westfields Event Center </p>
+                            <p class="fw-medium h5">When: May 28 at 9:30 AM </p>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-center p-0 w-100">
+                            <div>
+                                <p class="fw-medium pb-2">Thank you for purchasing!</p>
+                                <p class="fw-bold">Mr. Albert Sanchez De Leon Alfaro Del Mundo</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="d-flex flex-column justify-content-center align-items-end">
-                        <img src="./images/005_file_664dae93bea94.png" alt="qr" class="qrcode border border-2 border-black">
-                    </div>
-                </div>
-            </div>
-            <div class="row p-0 m-0 col-12 pt-1">
-                <div class="d-flex flex-row justify-content-center p-1">
-                    <div class="col-10">
-                        <p class="fw-medium h5 text-center m-0">Thank you for purchasing!</p>
-                        <p class="fw-medium h5 text-center m-0">Mr. Albert Sanchez</p>
+                <!-- QR Code -->
+                <div class="col-sm-5 col-12 p-0 m-0 pe-sm-3 pt-3 pt-sm-0">
+                    <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                        <img src="./images/005_file_665444e6472ef.png" alt="qr" class="qrcode border border-2 border-black">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

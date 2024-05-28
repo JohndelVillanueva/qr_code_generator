@@ -7,6 +7,7 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Nesk\Puphpeteer\Puppeteer;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -39,7 +40,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     send_email_with_pdf($email, $pdfFilePath);
 }
 
+function generate_img(){
+    $puppeteer = new Puppeteer();
+    $browser = $puppeteer->launch();
+    $page = $browser->newPage();
+    $page->goto('ticket.php');
+
+    $container = $page->querySelector('ticket-wrapper');
+
+    if ($container) {
+        $container->screenshot(['images/' => 'screenshot.png']);
+    }
+}
+
+
 function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
+    $options = new Options();
+    $options->set('isRemoteEnabled', TRUE);
+    $options->set('debugKeepTemp', TRUE);
+    $options->set('isHtml5ParserEnabled', true);
+    $dompdf = new Dompdf($options);
+    
     $dompdf = new Dompdf();
     $html = '
     <!DOCTYPE html>
@@ -63,7 +84,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
                     <div class="col-6">
                         <div class="d-flex flex-column justify-content-center align-items-center">
                             <div class="p-1">
-                                <img src="../assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
+                                <img src="assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
                             </div>
                             <div class="border border-1 border-black d-flex flex-column justify-content-evenly align-items-center p-2">
                                 <p class="fw-medium text-wrap text-center m-0 h4"> Into the Woods</p>

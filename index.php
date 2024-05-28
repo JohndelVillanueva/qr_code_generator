@@ -39,6 +39,7 @@
                     </div>
                 <div class="d-flex justify-content-center ">
                 <input class="btn btn-outline-light btn-lg rounded-0" id="submit" type="submit" value="Generate Qr-Code">
+            
                 </div>
             </form>
         </div>
