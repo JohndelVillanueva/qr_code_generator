@@ -25,65 +25,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Generate QR code data
     $codeContents = "$first_name $last_name";
-    $tempDir = "images/";
-    $fileName = '005_file_' . uniqid() . '.png';
-    $pngAbsoluteFilePath = $tempDir . $fileName; // Absolute path for saving the QR code
-    $urlRelativeFilePath = $tempDir . $fileName; // Relative path for embedding in HTML
-
-    // Generate QR code
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
-    $result->saveToFile($pngAbsoluteFilePath);
+
+    // Convert QR code to base64
+    $qrCodeDataUri = $result->getDataUri();
 
     // Generate PDF with the QR code
-    $pdfFilePath = generate_pdf($urlRelativeFilePath, $first_name, $last_name);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $first_name, $last_name);
 
     // Send email with PDF attachment
     send_email_with_pdf($email, $pdfFilePath);
 }
 
-function generate_pdf($qrCode, $first_name, $last_name) {
+function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
     $dompdf = new Dompdf();
     $html = '
     <!DOCTYPE html>
     <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ticket</title>
-        <!-- Bootstrap CDN  -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <!-- Javascript CDN  -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-        <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="reset.css">
-        <!-- Custom CSS  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            /* container layout  */
-            .ticket-container {
-                width: 510px;
-                height: 210px;
-                border: 1px solid black;
-            }
-            .qrcode{
-                width:135px;
-                height: 135px;
-            }
-            .bg-custom{
-                background-color:blanchedalmond;
-            }
-            *{
-                color:darkblue;
-            }
+            .ticket-container { width: 510px; height: 210px; border: 1px solid black; }
+            .qrcode { width: 135px; height: 135px; }
+            .bg-custom { background-color: blanchedalmond; }
+            * { color: darkblue; }
         </style>
     </head>
-
-    <!-- 492 px for width and 189 px for height  -->
-
     <body>
         <div class="d-flex flex-row justify-content-center">
             <div class="ticket-container bg-custom">
@@ -101,7 +73,7 @@ function generate_pdf($qrCode, $first_name, $last_name) {
                     </div>
                     <div class="col-6">
                         <div class="d-flex flex-column justify-content-center align-items-end">
-                            <img src="' . $qrCode . '" alt="qr" class="qrcode border border-2 border-black">
+                            <img src="' . $qrCodeDataUri . '" alt="qr" class="qrcode border border-2 border-black">
                         </div>
                     </div>
                 </div>
@@ -115,9 +87,7 @@ function generate_pdf($qrCode, $first_name, $last_name) {
                 </div>
             </div>
         </div>
-
     </body>
-
     </html>';
 
     $dompdf->loadHtml($html);
@@ -131,7 +101,6 @@ function generate_pdf($qrCode, $first_name, $last_name) {
     return $pdfFilePath;
 }
 
-
 function send_email_with_pdf($email, $pdfFilePath) {
     $sender = 'noreply@westfields.edu.ph';
     $subject = 'E-Ticket: QR Code ';
@@ -140,31 +109,25 @@ function send_email_with_pdf($email, $pdfFilePath) {
     $mail = new PHPMailer(true);
 
     try {
-        // Server settings
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'no-reply@westfields.edu.ph';
-        $mail->Password = 'kzeh yyam yhfr xrqh'; // Use environment variables or secure storage for passwords
+        $mail->Password = 'kzeh yyam yhfr xrqh';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
-        // $mail->SMTPDebug = 2; // Enable debugging if needed
 
-        // Recipients
         $mail->setFrom($sender);
         $mail->addAddress($email);
 
-        // Attachments
         $mail->addAttachment($pdfFilePath);
 
-        // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $body;
 
         $mail->send();
         echo "Email has been sent successfully.";
-        
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
