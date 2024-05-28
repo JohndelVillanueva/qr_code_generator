@@ -95,7 +95,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
     $dompdf->render();
 
     $output = $dompdf->output();
-    $pdfFilePath = 'ticket_' . uniqid() . '.pdf';
+    $pdfFilePath = 'images/ticket_' . uniqid() . '.pdf';
     file_put_contents($pdfFilePath, $output);
 
     return $pdfFilePath;
@@ -128,6 +128,7 @@ function send_email_with_pdf($email, $pdfFilePath) {
 
         $mail->send();
         echo "Email has been sent successfully.";
+        header('location: index.php' );
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
