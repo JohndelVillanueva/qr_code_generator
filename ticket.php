@@ -82,7 +82,7 @@
                     <div class="d-flex flex-column justify-content-center align-items-center">
 
                         <div>
-                            <img src="./assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
+                            <img src="http://localhost/qr_code_generator/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
                         </div>
 
                         <div class="d-flex flex-column justify-content-center align-items-center p-0 pb-2 w-100">

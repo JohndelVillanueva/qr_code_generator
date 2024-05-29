@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 
@@ -13,12 +11,11 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            
         }
         .container {
             opacity: .7;
         }
-        .input-text-box{
+        .input-text-box {
             opacity: 1!important;
         }
     </style>
@@ -29,17 +26,32 @@
         <div class="container border border-2 border-white py-5 text-bg-warning">
             <form method="post" action="qr_generator.php">
                 <h1 class="text-center">QR Code Generator</h1>
-                    <div class="input-text-box">
-                        <label for="first_name">First Name:</label><br>
-                        <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="first_name" name="first_name"><br><br>
-                        <label for="last_name">Last Name:</label><br>
-                        <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="last_name" name="last_name"><br><br>
-                        <label for="email">Email:</label><br>
-                        <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="email" id="email" name="email"><br><br>
+                <div class="input-text-box">
+                    <div class="row col-12">
+                        <div class="col-6">
+                            <label for="first_name">First Name:</label><br>
+                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="first_name" name="first_name" placeholder="First name: John"><br><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="last_name">Last Name:</label><br>
+                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="last_name" name="last_name" placeholder="Last name: Doe"><br><br>
+                        </div>
                     </div>
-                <div class="d-flex justify-content-center ">
-                <input class="btn btn-outline-light btn-lg rounded-0" id="submit" type="submit" value="Generate Qr-Code">
-            
+                    <div class="row col-12">
+                        <div class="col-6">
+                            <label for="first_name">Phone Number:</label><br>
+                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="phone_number" name="phone_number" placeholder="Contact #: ex. 09*********"><br><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="last_name">Attend:</label><br>
+                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="attend" name="attend" placeholder="Attend : Day 1" ><br><br>
+                        </div>
+                    </div>
+                    <label for="email">Email:</label><br>
+                    <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br><br>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input class="btn btn-outline-light btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">
                 </div>
             </form>
         </div>
@@ -49,7 +61,6 @@
     document.getElementById("submit").addEventListener("click", function() {
         // Show the alert
         alert("Press Okay!");
-
     });
 </script>
 
