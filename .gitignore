@@ -1,0 +1,4 @@
+*.log
+vendor/
+images/
+node_modules/
