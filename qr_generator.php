@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Generate QR code data
-    $codeContents = "$first_name $last_name";
+    $codeContents = "Email: $email\tName: $first_name $last_name";
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
@@ -40,18 +40,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     send_email_with_pdf($email, $pdfFilePath);
 }
 
-function generate_img(){
-    $puppeteer = new Puppeteer();
-    $browser = $puppeteer->launch();
-    $page = $browser->newPage();
-    $page->goto('ticket.php');
+// function generate_img(){
+//     $puppeteer = new Puppeteer();
+//     $browser = $puppeteer->launch();
+//     $page = $browser->newPage();
+//     $page->goto('ticket.php');
 
-    $container = $page->querySelector('ticket-wrapper');
+//     $container = $page->querySelector('ticket-wrapper');
 
-    if ($container) {
-        $container->screenshot(['images/' => 'screenshot.png']);
-    }
-}
+//     if ($container) {
+//         $container->screenshot(['images/' => 'screenshot.png']);
+//     }
+// }
 
 
 function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
@@ -60,49 +60,113 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
     $options->set('debugKeepTemp', TRUE);
     $options->set('isHtml5ParserEnabled', true);
     $dompdf = new Dompdf($options);
-    
-    $dompdf = new Dompdf();
     $html = '
     <!DOCTYPE html>
     <html lang="en">
+    
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ticket</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            .ticket-container { width: 510px; height: 210px; border: 1px solid black; }
-            .qrcode { width: 135px; height: 135px; }
-            .bg-custom { background-color: blanchedalmond; }
-            * { color: darkblue; }
+            .ticket-container {
+                width: 610px;
+                border: 1px solid black;
+                padding: 20px;
+                background-color: blanchedalmond;
+                color: darkblue;
+            }
+            .qrcode {
+                width: 254px;
+                min-width: 214px;
+                min-height: 200px;
+                border: 2px solid black;
+            }
+            p {
+                font-size: 18px;
+                line-height: 1.1;
+                margin: 0;
+            }
+            .text-center {
+                text-align: center;
+            }
+            .fw-medium {
+                font-weight: 500;
+            }
+            .fw-bold {
+                font-weight: bold;
+            }
+            .d-flex {
+                display: flex;
+            }
+            .flex-column {
+                flex-direction: column;
+            }
+            .flex-row {
+                flex-direction: row;
+            }
+            .justify-content-center {
+                justify-content: center;
+            }
+            .align-items-center {
+                align-items: center;
+            }
+            .w-100 {
+                width: 100%;
+            }
+            .p-0 {
+                padding: 0;
+            }
+            .py-2 {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            .col-12 {
+                width: 100%;
+            }
+            .col-sm-7 {
+                width: 58.333333%;
+            }
+            .col-sm-5 {
+                width: 41.666667%;
+            }
+            .pe-sm-3 {
+                padding-right: 1rem;
+            }
+            .pt-3 {
+                padding-top: 1rem;
+            }
+            .pt-sm-0 {
+                padding-top: 0;
+            }
         </style>
     </head>
+    
     <body>
         <div class="d-flex flex-row justify-content-center">
-            <div class="ticket-container bg-custom">
-                <div class="row p-0 m-0 col-12 pt-2">
-                    <div class="col-6">
+            <div class="ticket-container">
+                <div class="row p-0 m-0 col-12 py-2">
+                    <div class="col-sm-7 col-12 text-center">
                         <div class="d-flex flex-column justify-content-center align-items-center">
-                            <div class="p-1">
-                                <img src="assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
+                            <div>
+                                <img src="http://localhost/qr_code_generator/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
                             </div>
-                            <div class="border border-1 border-black d-flex flex-column justify-content-evenly align-items-center p-2">
-                                <p class="fw-medium text-wrap text-center m-0 h4"> Into the Woods</p>
-                                <p class="fw-medium text-wrap text-center m-0 h5">Event Center</p>
+                            <div class="d-flex flex-column justify-content-center align-items-center p-0 pb-2 w-100">
+                                <p class="fw-medium h5"> What: Into the Woods</p>
+                                <p class="fw-medium h5">Where: Westfields Event Center </p>
+                                <p class="fw-medium h5">When: May 28 at 9:30 AM </p>
+                            </div>
+                            <div class="d-flex flex-row justify-content-center p-0 w-100">
+                                <div>
+                                    <p class="fw-medium pb-2">Thank you for purchasing!</p>
+                                    <p class="fw-bold">Mr. ' . $first_name . ' ' . $last_name . '</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="d-flex flex-column justify-content-center align-items-end">
-                            <img src="' . $qrCodeDataUri . '" alt="qr" class="qrcode border border-2 border-black">
-                        </div>
-                    </div>
-                </div>
-                <div class="row p-0 m-0 col-12 pt-1">
-                    <div class="d-flex flex-row justify-content-center p-1">
-                        <div class="col-10">
-                            <p class="fw-medium h5 text-center m-0">Thank you for purchasing!</p>
-                            <p class="fw-medium h5 text-center m-0">Mr. ' . $first_name . ' ' . $last_name . '</p>
+                    <div class="col-sm-5 col-12 p-0 m-0 pe-sm-3 pt-3 pt-sm-0">
+                        <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                            <img src="'. $qrCodeDataUri . '" alt="qr" class="qrcode">
                         </div>
                     </div>
                 </div>
@@ -114,7 +178,6 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
-
     $output = $dompdf->output();
     $pdfFilePath = 'images/ticket_' . uniqid() . '.pdf';
     file_put_contents($pdfFilePath, $output);
