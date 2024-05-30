@@ -24,7 +24,7 @@
 <body class="bg-secondary-subtle">
     <div class="wrapper d-flex justify-content-center align-items-center vh-100">
         <div class="container border border-2 border-white py-5 text-bg-warning">
-            <form method="post" action="qr_generator.php">
+            <form method="post" action="qr.php">
                 <h1 class="text-center">QR Code Generator</h1>
                 <div class="input-text-box">
                     <div class="row col-12">
