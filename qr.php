@@ -22,6 +22,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    //Create a JSON File to send to JS Script
+    $data = array(
+        'first_name' => $first_name,
+        'last_name' => $last_name
+    );
+
+    $json_data = json_encode($data);
+
     // Generate QR code data
     $codeContents = "$first_name $last_name";
     $qrCode = QrCode::create($codeContents);
@@ -31,41 +39,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Convert QR code to base64
     $qrCodeDataUri = $result->getDataUri();
 
+    // Get the Template for the Ticket
     $htmlTemplate = file_get_contents('http://localhost/qr_code_generator/ticket3.php');
+    // Replace the Placeholder into the QR Generated
     $htmlTemplate = str_replace('<!--QR-->', $qrCodeDataUri, $htmlTemplate);
-
+    // Displays the Output of the Ticket with the QR Generated
     echo $htmlTemplate;
 
+
+    $nodePath = 'C:/Program Files/nodejs/node.exe';
+    $scriptPath  = 'C:/xampp/htdocs/qr_code_generator/img_generator.js';
+    $command = '"'. $nodePath .'" "'. $scriptPath .'"';
+    exec($command);
+
+    $postData = file_get_contents('php://input');
+    echo $postData;
+    if($postData) {
+
+        $filename = isset($_SERVER['HTTP_FILENAME']) ? $_SERVER['HTTP_FILENAME'] : 'screenshot.png';
+
+        file_put_contents($postData, $filename);
+        readfile($filename);
+        echo 'Image success';
+    } else {
+        echo 'no data';
+    }
+    //     $requestData = json_decode($postData, true);
+
+    //     if(isset($requestData['image'])) {
+    //         $imageData = base64_decode($requestData['image']);
+    //         $filename = isset($requestData['filename']) ? $requestData['filename'] : 'screenshot.png';
+    //         file_put_contents($filename, $imageData);
+
+    //         echo 'Image saved successfully';
+    //     } else {
+    //         echo 'Error data not found';
+    //     }
+    // } else {
+    //     echo 'No data received';
+    // }
+
     // Generate PDF with the QR code
-    $imgFilePath = generate_img($first_name, $last_name, $email);
+    $imgFilePath = generate_img();
 
     // Send email with PDF attachment
     send_email_with_img($email, $imgFilePath);
 }
 
 
-function generate_img($first_name,$last_name, $email){
+function generate_img(){
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
     
-    // $email = $_POST['email'];
-    // $first_name = $_POST['first_name'];
-    // $last_name = $_POST['last_name'];
-    
+    $screenshotData = file_get_contents('php://input');
+    $filename = isset($_SERVER['HTTP_FILENAME']) ? $_SERVER['HTTP_FILENAME'] : ''.$first_name.' '.$last_name.'.png';
+
+    $imgfile= file_put_contents('./images/' .$filename, $screenshotData);
+
+    echo 'Screenshot saved: ' .$filename;
+
     $nodePath = 'C:/Program Files/nodejs/node.exe';
     $scriptPath  = 'C:/xampp/htdocs/qr_code_generator/img_generator.js';
-    $command = '"'. $nodePath .'" "'. $scriptPath .'" "'.$first_name.'" "'.$last_name.'" "'.$email.'"';
-    $output = exec($command);
+    $command = '"'. $nodePath .'" "'. $scriptPath .'"';
+    exec($command);
 
-    if ($output === 'success'){
-        $imgFilePath = './images/'.$first_name.$last_name.'.png';
-        return $imgFilePath;
-    } else{
-        echo "Failed";
-        return false;
-    }
-
+    return $imgfile;
 }
 
-function send_email_with_img($email, $imgFilePath) {
+function send_email_with_img($email, $imgfile) {
     $sender = 'noreply@westfields.edu.ph';
     $subject = 'E-Ticket: QR Code ';
     $body = 'Please keep the attached PDF containing your QR code. <b> CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
@@ -84,7 +125,8 @@ function send_email_with_img($email, $imgFilePath) {
         $mail->setFrom($sender);
         $mail->addAddress($email);
 
-        $mail->addAttachment($imgFilePath);
+        //Set the Image
+        $mail->addAttachment((__DIR__"/images".$first_name.$last_name.'.png';));
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
