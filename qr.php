@@ -126,7 +126,7 @@ function send_email_with_img($email, $imgfile) {
         $mail->addAddress($email);
 
         //Set the Image
-        $mail->addAttachment((__DIR__"/images".$first_name.$last_name.'.png';));
+        $mail->addAttachment($imgfile);
 
         $mail->isHTML(true);
         $mail->Subject = $subject;
