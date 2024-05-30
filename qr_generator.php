@@ -60,118 +60,82 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
     $options->set('debugKeepTemp', TRUE);
     $options->set('isHtml5ParserEnabled', true);
     $dompdf = new Dompdf($options);
-    $html = '
-    <!DOCTYPE html>
+    $html = '<!DOCTYPE html>
     <html lang="en">
     
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ticket</title>
+        <!-- Bootstrap CDN  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <!-- Javascript CDN  -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+        <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="reset.css">
+        <!-- Custom CSS  -->
         <style>
-            .ticket-container {
+            *{
+                color:darkblue;
+            }
+            .bg-custom{
+                background-color: bisque;
+            }
+            .text-detail{
+                color:darkblue;
+                font-size:20px;
+                font-weight: 600;
+                height:43px;
+            }
+            /* container layout  */
+            .table-container {
                 width: 610px;
-                border: 1px solid black;
-                padding: 20px;
-                background-color: blanchedalmond;
-                color: darkblue;
+                height: 315px;
+                position: absolute;
+                transform: translate(-50%, -50%);
+                top: 20%;
+                left: 50%;
             }
-            .qrcode {
-                width: 254px;
-                min-width: 214px;
-                min-height: 200px;
-                border: 2px solid black;
+    
+            .wis-image>img{
+                width:320px;
+                height: 80px;
             }
-            p {
-                font-size: 18px;
-                line-height: 1.1;
-                margin: 0;
-            }
-            .text-center {
-                text-align: center;
-            }
-            .fw-medium {
-                font-weight: 500;
-            }
-            .fw-bold {
-                font-weight: bold;
-            }
-            .d-flex {
-                display: flex;
-            }
-            .flex-column {
-                flex-direction: column;
-            }
-            .flex-row {
-                flex-direction: row;
-            }
-            .justify-content-center {
-                justify-content: center;
-            }
-            .align-items-center {
-                align-items: center;
-            }
-            .w-100 {
-                width: 100%;
-            }
-            .p-0 {
-                padding: 0;
-            }
-            .py-2 {
-                padding-top: 0.5rem;
-                padding-bottom: 0.5rem;
-            }
-            .col-12 {
-                width: 100%;
-            }
-            .col-sm-7 {
-                width: 58.333333%;
-            }
-            .col-sm-5 {
-                width: 41.666667%;
-            }
-            .pe-sm-3 {
-                padding-right: 1rem;
-            }
-            .pt-3 {
-                padding-top: 1rem;
-            }
-            .pt-sm-0 {
-                padding-top: 0;
-            }
+            .qr-image>img{
+                width:281px;
+                height:286px;
+            }    
         </style>
     </head>
     
+    <!-- 492 px for width and 189 px for height  -->
+    
     <body>
-        <div class="d-flex flex-row justify-content-center">
-            <div class="ticket-container">
-                <div class="row p-0 m-0 col-12 py-2">
-                    <div class="col-sm-7 col-12 text-center">
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <div>
-                                <img src="http://localhost/qr_code_generator/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
-                            </div>
-                            <div class="d-flex flex-column justify-content-center align-items-center p-0 pb-2 w-100">
-                                <p class="fw-medium h5"> What: Into the Woods</p>
-                                <p class="fw-medium h5">Where: Westfields Event Center </p>
-                                <p class="fw-medium h5">When: May 28 at 9:30 AM </p>
-                            </div>
-                            <div class="d-flex flex-row justify-content-center p-0 w-100">
-                                <div>
-                                    <p class="fw-medium pb-2">Thank you for purchasing!</p>
-                                    <p class="fw-bold">Mr. ' . $first_name . ' ' . $last_name . '</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-5 col-12 p-0 m-0 pe-sm-3 pt-3 pt-sm-0">
-                        <div class="d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="'. $qrCodeDataUri . '" alt="qr" class="qrcode">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <table class="table-container border bordered border-black bg-custom">
+            <tbody>
+                <tr>
+                    <td class="wis-image" style="padding-top:10px;"><img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="wis LOGO"></td>
+                    <td rowspan="6" class="qr-image px-2"><img src="http://localhost/qr_code_generator/assets/frame.png" alt="qr" class="border border-2 border-black"></td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center">Into The Woods</td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center"> Westfields Event Center</td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center"> May 28 at 9:30 AM</td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center"> Thank you for purchasing!</td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. Albert Sanchez De Leon Alfaro Del Mundo</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
     </html>';
 

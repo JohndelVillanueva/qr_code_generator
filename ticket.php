@@ -82,7 +82,7 @@
                     <div class="d-flex flex-column justify-content-center align-items-center">
 
                         <div>
-                            <img src="http://localhost/qr_code_generator/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
+                            <img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="Westfields Logo" class="w-100 h-100 logo">
                         </div>
 
                         <div class="d-flex flex-column justify-content-center align-items-center p-0 pb-2 w-100">
@@ -102,7 +102,7 @@
                 <!-- QR Code -->
                 <div class="col-sm-5 col-12 p-0 m-0 pe-sm-3 pt-3 pt-sm-0">
                     <div class="d-flex flex-column justify-content-center align-items-center w-100">
-                        <img src="./images/005_file_665444e6472ef.png" alt="qr" class="qrcode border border-2 border-black">
+                        <img src="./assets/frame.png" alt="qr" class="qrcode border border-2 border-black">
                     </div>
                 </div>
             </div>
