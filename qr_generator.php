@@ -30,14 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $count = (int)file_get_contents($countFile);
 
-    // Increment the count
-    $count++;
-
-    // Save the updated count back to the file
-    file_put_contents($countFile, $count);
-
     // Generate QR code data with ticket number
-    $ticketNumber = $count;
+    $ticketNumber = $count + 1; // Temporarily increment for display
     $codeContents = "Ticket Number: $ticketNumber\nEmail: $email\nName: $first_name $last_name";
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
@@ -49,8 +43,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Generate PDF with the QR code
     $pdfFilePath = generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber);
 
-    // Send email with PDF attachment
-    send_email_with_pdf($email, $pdfFilePath);
+    // Attempt to send email with PDF attachment
+    $emailSent = send_email_with_pdf($email, $pdfFilePath);
+
+    // If email sent successfully, increment the count
+    if ($emailSent) {
+        file_put_contents($countFile, $count + 1);
+    }
 }
 
 function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
@@ -132,7 +131,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
                     <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. ' . $first_name . ' ' . $last_name . '</td>
                 </tr>
                 <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> ' . $ticketNumber . '</td>
+                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Ticket Number: ' . $ticketNumber . '</td>
                 </tr>
             </tbody>
         </table>
@@ -177,8 +176,10 @@ function send_email_with_pdf($email, $pdfFilePath) {
         $mail->send();
         echo "Email has been sent successfully.";
         header('location: index.php');
+        return true;
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
 }
 ?>
