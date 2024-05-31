@@ -112,6 +112,9 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
         <table class="table-container border bordered border-black bg-custom">
             <tbody>
                 <tr>
+                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> ' . $ticketNumber . '</td>
+                </tr>
+                <tr>
                     <td class="wis-image" style="padding-top:10px;"><img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="wis LOGO"></td>
                     <td rowspan="6" class="qr-image px-2"><img src="' . $qrCodeDataUri . '" alt="QR Code" class="border border-2 border-black"></td>
                 </tr>
@@ -130,9 +133,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
                 <tr>
                     <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. ' . $first_name . ' ' . $last_name . '</td>
                 </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Ticket Number: ' . $ticketNumber . '</td>
-                </tr>
+
             </tbody>
         </table>
     </body>
