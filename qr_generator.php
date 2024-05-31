@@ -7,7 +7,6 @@ use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Nesk\Puphpeteer\Puppeteer;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -24,8 +23,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Generate QR code data
-    $codeContents = "Email: $email\tName: $first_name $last_name";
+    // Read the current count from the file
+    $countFile = 'ticket_count.txt';
+    if (!file_exists($countFile)) {
+        file_put_contents($countFile, 0);
+    }
+    $count = (int)file_get_contents($countFile);
+
+    // Increment the count
+    $count++;
+
+    // Save the updated count back to the file
+    file_put_contents($countFile, $count);
+
+    // Generate QR code data with ticket number
+    $ticketNumber = $count;
+    $codeContents = "Ticket Number: $ticketNumber\nEmail: $email\nName: $first_name $last_name";
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
@@ -34,27 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $qrCodeDataUri = $result->getDataUri();
 
     // Generate PDF with the QR code
-    $pdfFilePath = generate_pdf($qrCodeDataUri, $first_name, $last_name);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber);
 
     // Send email with PDF attachment
     send_email_with_pdf($email, $pdfFilePath);
 }
 
-// function generate_img(){
-//     $puppeteer = new Puppeteer();
-//     $browser = $puppeteer->launch();
-//     $page = $browser->newPage();
-//     $page->goto('ticket.php');
-
-//     $container = $page->querySelector('ticket-wrapper');
-
-//     if ($container) {
-//         $container->screenshot(['images/' => 'screenshot.png']);
-//     }
-// }
-
-
-function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
+function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
@@ -110,14 +109,12 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
         </style>
     </head>
     
-    <!-- 492 px for width and 189 px for height  -->
-    
     <body>
         <table class="table-container border bordered border-black bg-custom">
             <tbody>
                 <tr>
                     <td class="wis-image" style="padding-top:10px;"><img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="wis LOGO"></td>
-                    <td rowspan="6" class="qr-image px-2"><img src="http://localhost/qr_code_generator/assets/frame.png" alt="qr" class="border border-2 border-black"></td>
+                    <td rowspan="6" class="qr-image px-2"><img src="' . $qrCodeDataUri . '" alt="QR Code" class="border border-2 border-black"></td>
                 </tr>
                 <tr>
                     <td class="text-detail text-wrap text-center">Into The Woods</td>
@@ -132,7 +129,10 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
                     <td class="text-detail text-wrap text-center"> Thank you for purchasing!</td>
                 </tr>
                 <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. Albert Sanchez De Leon Alfaro Del Mundo</td>
+                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. ' . $first_name . ' ' . $last_name . '</td>
+                </tr>
+                <tr>
+                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> ' . $ticketNumber . '</td>
                 </tr>
             </tbody>
         </table>
@@ -151,8 +151,8 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name) {
 
 function send_email_with_pdf($email, $pdfFilePath) {
     $sender = 'noreply@westfields.edu.ph';
-    $subject = 'E-Ticket: QR Code ';
-    $body = 'Please keep the attached PDF containing your QR code. <b> CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
+    $subject = 'E-Ticket: QR Code';
+    $body = 'Please keep the attached PDF containing your QR code. <b>CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
 
     $mail = new PHPMailer(true);
 
@@ -176,7 +176,7 @@ function send_email_with_pdf($email, $pdfFilePath) {
 
         $mail->send();
         echo "Email has been sent successfully.";
-        header('location: index.php' );
+        header('location: index.php');
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
