@@ -96,10 +96,10 @@
                     <div class="row col-12">
                         <div class="col-6">
                             <label for="seat_no.">Seat Type:</label>
-                            <select name="seat_no." id="seat_no." class="form-select form-select-lg border border-2 border-dark rounded-0">
+                            <select name="seat_number" id="seat_number" class="form-select form-select-lg border border-2 border-dark rounded-0">
                                 <option value="" selected hidden disabled>Select Seat Type</option>
-                                <option value="">Premium Seat</option>
-                                <option value="">Regular Seat</option>
+                                <option value="1">Regular Seat</option>
+                                <option value="2">Premium Seat</option>
                             </select>
                         </div>
                         <div class="col-6">
