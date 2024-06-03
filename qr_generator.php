@@ -133,7 +133,6 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                 width: 281px;
                 height: 286px;
             }
-<<<<<<< HEAD
     
             .qrcode{
                 top:29px;
@@ -143,43 +142,14 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                 border-radius: 10px;
             }
     
-=======
->>>>>>> 7943e72759b4228f3831de668589d5b601e144c1
         </style>
     </head>
     
     <body>
-<<<<<<< HEAD
         <table class="table" style="width:600px;">
             <tbody style="height:233px;">
                 <td style="padding:0; margin:0;"><img style="width:720px; height: 233px; margin:0; padding: 0; " src="http://localhost/qr_code_generator/assets/1.png"><img style="width:198px; height:194px; position:fixed; z-index:0; top:27px;left:17px; border-radius: 8px" src="'.$qrCodeDataUri.'"></td>
                 <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;"><div style="width:150px;"><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:58.5px; color:white; margin-top: 56px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:9px; color:black; margin-bottom:50px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p></div></td>
-=======
-        <table class="table-container border bordered border-black bg-custom">
-            <tbody>
-                <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> ' . htmlspecialchars($ticketType) . '</td>
-                </tr>
-                <tr>
-                    <td class="wis-image" style="padding-top:10px;"><img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="wis LOGO"></td>
-                    <td rowspan="6" class="qr-image px-2"><img src="' . htmlspecialchars($qrCodeDataUri) . '" alt="QR Code" class="border border-2 border-black"></td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center">Into The Woods</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> Westfields Event Center</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> May 28 at 9:30 AM</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> Thank you for purchasing!</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. ' . htmlspecialchars($first_name) . ' ' . htmlspecialchars($last_name) . '</td>
-                </tr>
->>>>>>> 7943e72759b4228f3831de668589d5b601e144c1
             </tbody>
         </table>
     </body>
