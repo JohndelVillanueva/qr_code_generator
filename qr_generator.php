@@ -46,9 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($seat_number == 1) {
         $normalTicket = $count + 1; // Temporarily increment for display
         $codeContents = "Regular Ticket: $normalTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $normalTicket;
     } else {
         $vipTicket = $countVip + 1; // Temporarily increment for display
         $codeContents = "Premium Ticket: $vipTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $vipTicket;
     }
 
     $qrCode = QrCode::create($codeContents);
@@ -69,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Debugging statement
     error_log("Ticket Type: " . $ticketType); // Log the ticket type
 
-    $pdfFilePath = generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $ticketNumber);
 
     // Attempt to send email with PDF attachment
     $emailSent = send_email_with_pdf($email, $pdfFilePath);
@@ -84,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
+function generate_pdf($qrCodeDataUri, $ticketNumber ) {
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
@@ -161,7 +163,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:150px;">
                             <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:80px; color:white; margin-top: 52px; line-height:40px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p>
-                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p>
+                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> '. $ticketNumber .'</p>
                         </div>
                     </td>
                 </tbody>
@@ -238,7 +240,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:150px;">
                             <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:80px; color:white; margin-top: 52px; line-height:40px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p>
-                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p>
+                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;">'. $ticketNumber .'</p>
                         </div>
                     </td>
                 </tbody>
