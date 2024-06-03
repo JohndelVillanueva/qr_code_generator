@@ -45,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Generate QR code data with ticket number
     if ($seat_number == 1) {
         $normalTicket = $count + 1; // Temporarily increment for display
-        $codeContents = "Ticket Number: $normalTicket\tEmail: $email\tName: $first_name $last_name\tPhoneNumber: $phone_number\tAttend Date: $attendance";
+        $codeContents = "Regular Ticket: $normalTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
     } else {
         $vipTicket = $countVip + 1; // Temporarily increment for display
-        $codeContents = "Ticket Number: $vipTicket\tEmail: $email\tName: $first_name $last_name\tPhoneNumber: $phone_number\tAttend Date: $attendance";
+        $codeContents = "Premium Ticket: $vipTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
     }
 
     $qrCode = QrCode::create($codeContents);
