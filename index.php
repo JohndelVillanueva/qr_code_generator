@@ -14,9 +14,6 @@
             background-attachment: fixed;
         }
 
-        .container {
-            opacity: .7;
-        }
 
         .input-text-box {
             opacity: 1 !important;
@@ -73,7 +70,7 @@
             <form method="post" action="qr_generator.php">
                 <h1 class="text-center">QR Code Generator</h1>
                 <div class="input-text-box">
-                    <div class="row col-12">
+                    <div class="row col-12 mx-auto">
                         <div class="col-6">
                             <label for="first_name">First Name:</label><br>
                             <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="first_name" name="first_name" placeholder="First name: John"><br><br>
@@ -83,7 +80,7 @@
                             <input class="col-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="last_name" name="last_name" placeholder="Last name: Doe"><br><br>
                         </div>
                     </div>
-                    <div class="row col-12">
+                    <div class="row col-12 mx-auto">
                     <div class="col-6">
                             <label for="seat_no.">Seat Type:</label>
                             <select name="seat_number" id="seat_number" class="form-select form-select-lg border border-2  rounded-0">
@@ -101,7 +98,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row col-12">
+                    <div class="row col-12 mx-auto">
                     <div class="col-6">
                             <label for="first_name">Phone Number:</label><br>
                             <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="phone_number" name="phone_number" placeholder="Contact #: ex. 09*********"><br><br>
