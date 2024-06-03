@@ -20,10 +20,10 @@
         }
 
         h1{
-            color:#500d50;
+            color:purple;
         }
         label{
-            color:#500d50;
+            color:purple;
             font-weight: 500;
         }
         .form-control{
