@@ -156,7 +156,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                 <tbody style="height:233px;">
                     <td style="padding:0; margin:0;">
                         <img style="width:720px; height: 233px; margin:0; padding: 0;" src="http://localhost/qr_code_generator/assets/1.png">
-                        <img style="width:198px; height:194px; position:fixed; z-index:0; top:27px; left:17px; border-radius:8px" src="'.$qrCodeDataUri.'">
+                        <img style="width:198px; height:194px; position:fixed; z-index:0; top:28px; left:17px; border-radius:8px" src="'.$qrCodeDataUri.'">
                     </td>
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:150px;">
@@ -233,7 +233,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
                 <tbody style="height:233px;">
                     <td style="padding:0; margin:0;">
                         <img style="width:720px; height: 233px; margin:0; padding: 0;" src="http://localhost/qr_code_generator/assets/2.png">
-                        <img style="width:198px; height:194px; position:fixed; z-index:0; top:24.5px; left:17px; border-radius:8px" src="'.$qrCodeDataUri.'">
+                        <img style="width:198px; height:194px; position:fixed; z-index:0; top:25px; left:17px; border-radius:8px" src="'.$qrCodeDataUri.'">
                     </td>
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:150px;">
