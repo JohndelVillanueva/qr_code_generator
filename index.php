@@ -76,35 +76,39 @@
                     <div class="row col-12">
                         <div class="col-6">
                             <label for="first_name">First Name:</label><br>
-                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="first_name" name="first_name" placeholder="First name: John"><br><br>
+                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="first_name" name="first_name" placeholder="First name: John"><br><br>
                         </div>
                         <div class="col-6">
                             <label for="last_name">Last Name:</label><br>
-                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="last_name" name="last_name" placeholder="Last name: Doe"><br><br>
+                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="last_name" name="last_name" placeholder="Last name: Doe"><br><br>
                         </div>
                     </div>
                     <div class="row col-12">
-                        <div class="col-6">
-                            <label for="first_name">Phone Number:</label><br>
-                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="phone_number" name="phone_number" placeholder="Contact #: ex. 09*********"><br><br>
-                        </div>
-                        <div class="col-6">
-                            <label for="last_name">Attend:</label><br>
-                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="attend" name="attend" placeholder="Attend : Day 1"><br><br>
-                        </div>
-                    </div>
-                    <div class="row col-12">
-                        <div class="col-6">
+                    <div class="col-6">
                             <label for="seat_no.">Seat Type:</label>
-                            <select name="seat_number" id="seat_number" class="form-select form-select-lg border border-2 border-dark rounded-0">
+                            <select name="seat_number" id="seat_number" class="form-select form-select-lg border border-2  rounded-0">
                                 <option value="" selected hidden disabled>Select Seat Type</option>
                                 <option value="1">Regular Seat</option>
                                 <option value="2">Premium Seat</option>
+                            </select><br><br>
+                        </div>
+                        <div class="col-6">
+                            <label for="last_name">Attend:</label><br>
+                            <select name="attend" id="attend" class="form-select form-select-lg border border-2 rounded-0">
+                                <option value="" hidden disabled selected>Select Ticket Variation</option>
+                                <option value="day1">Day 1</option>
+                                <option value="day2">Day 2</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                    <div class="col-6">
+                            <label for="first_name">Phone Number:</label><br>
+                            <input class="col-lg-6 form-control form-control-lg rounded-0 border border-2 " type="text" id="phone_number" name="phone_number" placeholder="Contact #: ex. 09*********"><br><br>
                         </div>
                         <div class="col-6">
                             <label for="email">Email:</label><br>
-                            <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br><br>
+                            <input class="form-control form-control-lg rounded-0 border border-2 " type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br><br>
                         </div>
                     </div>
                 </div>
