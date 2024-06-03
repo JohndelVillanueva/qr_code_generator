@@ -22,6 +22,37 @@
             opacity: 1 !important;
         }
 
+        h1{
+            color:#500d50;
+        }
+        label{
+            color:#500d50;
+            font-weight: 500;
+        }
+        .form-control{
+            border: solid 2px purple!important;
+        }
+
+        .form-control:focus{
+            box-shadow: none!important;
+            outline: solid 1px purple;
+            transition: 62ms linear;
+        }
+
+        .form-select{
+            border: solid 2px purple!important;
+        }
+
+        .form-select:focus{
+            box-shadow: none!important;
+            outline: solid 1px purple;
+            transition: 62ms linear;
+        }
+        
+        .border-custom{
+            border-color: purple!important;
+            border-style: solid;
+        }
         .btn-customized {
             color:white;
             background-color: purple;
@@ -38,7 +69,7 @@
 
 <body class="bg-secondary-subtle">
     <div class="wrapper d-flex justify-content-center align-items-center vh-100">
-        <div class="container border border-2 border-white py-5 text-bg-warning">
+        <div class="container border border-2 border-custom py-5 text-bg-warning">
             <form method="post" action="qr_generator.php">
                 <h1 class="text-center">QR Code Generator</h1>
                 <div class="input-text-box">
