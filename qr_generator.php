@@ -110,24 +110,24 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
                 height: 286px;
             }
     
-            .seat {
-                font-size: 16pt;
-                font-weight: bold;
-                writing-mode: vertical-lr;
-                transform: rotate(270deg);
-    
+            .qrcode{
+                top:29px;
+                left:40px;
+                width: 205px;
+                height: 204px;
+                border-radius: 10px;
             }
+    
         </style>
     </head>
     
     <!-- 492 px for width and 189 px for height  -->
     
     <body>
-        <table class="table table-bordered border border-2 border-black" style="width:600px;">
-            <tbody>
-                <td class="seat" style="width:30px; height:200px; padding:0; margin:0;">Seat No: </td>
-                <td style="width:10%; height: 200px; padding:0; margin:0;"><img style="width:200px; height:240px;" src="http://localhost/qr_code_generator/assets/frame.png" alt="no-image"></td>
-                <td style="width:30%; height: 200px; padding:0; margin:0;"><img style="width:600px; height: 240px;" src="http://localhost/qr_code_generator/assets/Act 1.png" alt="no image"></td>
+        <table class="table" style="width:600px;">
+            <tbody style="height:233px;">
+                <td style="padding:0; margin:0;"><img style="width:720px; height: 233px; margin:0; padding: 0; " src="http://localhost/qr_code_generator/assets/1.png"><img style="width:198px; height:194px; position:fixed; z-index:0; top:27px;left:17px; border-radius: 8px" src="'.$qrCodeDataUri.'"></td>
+                <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;"><div style="width:150px;"><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:58.5px; color:white; margin-top: 56px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:9px; color:black; margin-bottom:50px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p></div></td>
             </tbody>
         </table>
     </body>
