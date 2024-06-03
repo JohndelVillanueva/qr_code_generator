@@ -1,3 +1,6 @@
 *.log
 vendor/
 node_modules/
+ticket_count.txt/
+ticket_countVIP.txt/
+
