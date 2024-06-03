@@ -37,7 +37,7 @@ if (file_exists($countFileVip2)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $seat_number = $_POST['seat_number'];//seat type
+    $seat_type = $_POST['seat_type'];//seat type
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -55,15 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Generate QR code data with ticket number
-    if ($seat_number == 1 && $attendance == 'day1') {
+    if ($seat_type == 1 && $attendance == 'day1') {
         $normalTicket1 = $count1 + 1; // Temporarily increment for display
         $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
         $ticketNumber = $normalTicket1;
-    } else if ($seat_number == 1 && $attendance === 'day2'){
+    }  if ($seat_type == 1 && $attendance === 'day2'){
         $normalTicket2 = $count2 + 1; // Temporarily increment for display
         $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
         $ticketNumber = $normalTicket2;
-    } else if ($seat_number == 2 && $attendance === 'day1'){
+    }  if ($seat_type == 2 && $attendance === 'day1'){
         $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
         $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
         $ticketNumber = $vipTicket1;
@@ -81,12 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $qrCodeDataUri = $result->getDataUri();
 
     // Debugging statement
-    error_log("Seat Number: " . $seat_number); // Log the seat number
+    error_log("Seat_type: " . $seat_type); // Log the seat number
 
     // Generate PDF with the QR code
     $normalTicketLabel = "Normal Ticket";
     $vipTicketLabel = "VIP Ticket";
-    $ticketType = $seat_number == 1 ? $normalTicketLabel : $vipTicketLabel;
+    $ticketType = $seat_type == 1 ? $normalTicketLabel : $vipTicketLabel;
 
     // Debugging statement
     error_log("Ticket Type: " . $ticketType); // Log the ticket type
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If email sent successfully, increment the count
     if ($emailSent) {
-        if ($seat_number == 1) {
+        if ($seat_type == 1) {
             file_put_contents($countFile, $count + 1);
         } else {
             file_put_contents($countFileVip, $countVip + 1);

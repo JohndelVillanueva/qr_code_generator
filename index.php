@@ -83,7 +83,7 @@
                     <div class="row col-12 mx-auto">
                     <div class="col-6">
                             <label for="seat_no.">Seat Type:</label>
-                            <select name="seat_number" id="seat_number" class="form-select form-select-lg border border-2  rounded-0">
+                            <select name="seat_type" id="seat_type" class="form-select form-select-lg border border-2  rounded-0">
                                 <option value="" selected hidden disabled>Select Seat Type</option>
                                 <option value="1">Regular Seat</option>
                                 <option value="2">Premium Seat</option>
