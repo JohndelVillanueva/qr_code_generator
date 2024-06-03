@@ -13,11 +13,13 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+
         .container {
             opacity: .7;
         }
+
         .input-text-box {
-            opacity: 1!important;
+            opacity: 1 !important;
         }
     </style>
 </head>
@@ -45,11 +47,23 @@
                         </div>
                         <div class="col-6">
                             <label for="last_name">Attend:</label><br>
-                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="attend" name="attend" placeholder="Attend : Day 1" ><br><br>
+                            <input class="col-6 form-control form-control-lg rounded-0 border border-2 border-dark" type="text" id="attend" name="attend" placeholder="Attend : Day 1"><br><br>
                         </div>
                     </div>
-                    <label for="email">Email:</label><br>
-                    <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br><br>
+                    <div class="row col-12">
+                        <div class="col-6">
+                            <label for="seat_no.">Seat Type:</label>
+                            <select name="seat_no." id="seat_no." class="form-select form-select-lg border border-2 border-dark rounded-0">
+                                <option value="" selected hidden disabled>Select Seat Type</option>
+                                <option value="">Premium Seat</option>
+                                <option value="">Regular Seat</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="email">Email:</label><br>
+                            <input class="form-control form-control-lg rounded-0 border border-2 border-dark" type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br><br>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <input class="btn btn-outline-light btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">

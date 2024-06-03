@@ -6,24 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tickets</title>
     <style>
-        .ticket-wrapper{
-            width:770px;
-            height:249px;
+        .ticket-wrapper {
+            width: 770px;
+            height: 249px;
         }
-        .bg-custom{
+
+        .bg-custom {
             background-image: url(http://localhost/qr_code_generator/assets/1.png);
             background-size: contain;
             background-repeat: no-repeat;
         }
-        .qr-code{
-            width:27%;
-            height:84%;
+        .qr-code {
+            width: 210px;
+            height: 210px;
             border-radius: 10px;
-            position:relative;
-            top:12.1%;
-            left:2.5%;
+            position: fixed;
+            top: 3.1%;
+            left: 4%;
             z-index: 1;
             background-color: transparent;
+        }
+        p{
+            border: 2px solid black;
+            padding: 10px;
+            margin: 0;
+            height:100%;
+        }
+        .ticket-stab{
+            font-size: 16pt;
+            font-weight: bold;
+            text-orientation:sideways-right;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
         }
     </style>
     <!-- Bootstrap CDN  -->
@@ -37,13 +51,16 @@
 </head>
 
 <body>
-    <div class="container d-flex flex-row justify-content-center align-items-center">
-        <div class="ticket-wrapper bg-custom">
-        <div class="ticket-container h-100 w-100">
-            <!-- Need to be replaced with the Generated Code -->
-            <img src="http://localhost/qr_code_generator/images/005_file_665444e6472ef.png" class="qr-code">
+    <table class="container table"></table>
+    <div class="container-fluid">
+        <div class="ticket-wrapper">
+            <div class="ticket-container h-100 w-100 d-flex flex-row">
+                <p class="ticket-stab">Seat No: </p>
+                <img src="http://localhost/qr_code_generator/assets/1.png" alt="" class="ticket-layout">
+                <img src="http://localhost/qr_code_generator/assets/frame.png" class="qr-code">
+            </div>
         </div>
-        </div>
+    </div>
 
     </div>
 </body>

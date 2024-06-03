@@ -57,6 +57,7 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
     $options->set('isHtml5ParserEnabled', true);
+    $options->set('dpi', 120);
     $dompdf = new Dompdf($options);
     $html = '<!DOCTYPE html>
     <html lang="en">
@@ -75,68 +76,62 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketNumber) {
         <link rel="stylesheet" href="reset.css">
         <!-- Custom CSS  -->
         <style>
-            *{
-                color:darkblue;
+            * {
+                color: darkblue;
             }
-            .bg-custom{
+    
+            .bg-custom {
                 background-color: bisque;
             }
-            .text-detail{
-                color:darkblue;
-                font-size:20px;
+    
+            .text-detail {
+                color: darkblue;
+                font-size: 20px;
                 font-weight: 600;
-                height:43px;
             }
+    
             /* container layout  */
             .table-container {
                 width: 610px;
-                height: 315px;
+                height: 300px;
                 position: absolute;
                 transform: translate(-50%, -50%);
                 top: 20%;
                 left: 50%;
             }
     
-            .wis-image>img{
-                width:320px;
+            .wis-image>img {
+                width: 320px;
                 height: 80px;
             }
-            .qr-image>img{
-                width:281px;
-                height:286px;
-            }    
+    
+            .qr-image>img {
+                width: 281px;
+                height: 286px;
+            }
+    
+            .seat {
+                font-size: 16pt;
+                font-weight: bold;
+                writing-mode: vertical-lr;
+                transform: rotate(270deg);
+    
+            }
         </style>
     </head>
     
+    <!-- 492 px for width and 189 px for height  -->
+    
     <body>
-        <table class="table-container border bordered border-black bg-custom">
+        <table class="table table-bordered border border-2 border-black" style="width:600px;">
             <tbody>
-                <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> ' . $ticketNumber . '</td>
-                </tr>
-                <tr>
-                    <td class="wis-image" style="padding-top:10px;"><img src="http://localhost/qr_code_generator/assets/logo.PNG" alt="wis LOGO"></td>
-                    <td rowspan="6" class="qr-image px-2"><img src="' . $qrCodeDataUri . '" alt="QR Code" class="border border-2 border-black"></td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center">Into The Woods</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> Westfields Event Center</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> May 28 at 9:30 AM</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center"> Thank you for purchasing!</td>
-                </tr>
-                <tr>
-                    <td class="text-detail text-wrap text-center" style="padding-bottom:10px;"> Mr. ' . $first_name . ' ' . $last_name . '</td>
-                </tr>
-
+                <td class="seat" style="width:30px; height:200px; padding:0; margin:0;">Seat No: </td>
+                <td style="width:10%; height: 200px; padding:0; margin:0;"><img style="width:200px; height:240px;" src="http://localhost/qr_code_generator/assets/frame.png" alt="no-image"></td>
+                <td style="width:30%; height: 200px; padding:0; margin:0;"><img style="width:600px; height: 240px;" src="http://localhost/qr_code_generator/assets/Act 1.png" alt="no image"></td>
             </tbody>
         </table>
     </body>
+    
     </html>';
 
     $dompdf->loadHtml($html);

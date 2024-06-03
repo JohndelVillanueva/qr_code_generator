@@ -16,6 +16,8 @@
             background-repeat: no-repeat;
         }
         .qr-code{
+            min-width: 27%;
+            min-height: 84%;
             width:27%;
             height:84%;
             border-radius: 10px;
@@ -37,10 +39,13 @@
 </head>
 
 <body>
-    <div class="container d-flex flex-row justify-content-center align-items-center">
+    <div class="container-fluid">
         <div class="ticket-wrapper bg-custom">
         <div class="ticket-container h-100 w-100">
-            <img src="<!--QR-->" class="qr-code">
+            <img src="http://localhost/qr_code_generator/assets/frame.png" class="qr-code">
+        </div>
+        <div class="ticket-stab">
+            <p>Seat No.</p>
         </div>
         </div>
 
