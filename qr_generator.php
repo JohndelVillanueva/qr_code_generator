@@ -91,69 +91,137 @@ function generate_pdf($qrCodeDataUri, $first_name, $last_name, $ticketType) {
     $options->set('isHtml5ParserEnabled', true);
     $options->set('dpi', 120);
     $dompdf = new Dompdf($options);
-    $html = '<!DOCTYPE html>
-    <html lang="en">
+    //Day 1
+    if ($_POST['attend'] == 'day1'){
+        $html = '<!DOCTYPE html>
+        <html lang="en">
+        
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Ticket</title>
+            <!-- Bootstrap CDN  -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+            <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+            <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
+            <style>
+                * {
+                    color: darkblue;
+                }
+                .bg-custom {
+                    background-color: bisque;
+                }
+                .text-detail {
+                    color: darkblue;
+                    font-size: 20px;
+                    font-weight: 600;
+                    height: 43px;
+                }
+                .table-container {
+                    width: 610px;
+                    height: 315px;
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 20%;
+                    left: 50%;
+                }
+                .wis-image > img {
+                    width: 320px;
+                    height: 80px;
+                }
+                .qr-image > img {
+                    width: 281px;
+                    height: 286px;
+                }
+        
+                .qrcode{
+                    top:29px;
+                    left:40px;
+                    width: 205px;
+                    height: 204px;
+                    border-radius: 10px;
+                }
+        
+            </style>
+        </head>
+        
+        <body>
+            <table class="table" style="width:600px;">
+                <tbody style="height:233px;">
+                    <td style="padding:0; margin:0;"><img style="width:720px; height: 233px; margin:0; padding: 0; " src="http://localhost/qr_code_generator/assets/1.png"><img style="width:198px; height:194px; position:fixed; z-index:0; top:27px;left:17px; border-radius: 8px" src="'.$qrCodeDataUri.'"></td>
+                    <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;"><div style="width:150px;"><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:58.5px; color:white; margin-top: 56px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:9px; color:black; margin-bottom:50px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p></div></td>
+                </tbody>
+            </table>
+        </body>
+        </html>';
+    }else {
+        $html = '<!DOCTYPE html>
+        <html lang="en">
+        
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Ticket</title>
+            <!-- Bootstrap CDN  -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+            <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+            <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
+            <style>
+                * {
+                    color: darkblue;
+                }
+                .bg-custom {
+                    background-color: bisque;
+                }
+                .text-detail {
+                    color: darkblue;
+                    font-size: 20px;
+                    font-weight: 600;
+                    height: 43px;
+                }
+                .table-container {
+                    width: 610px;
+                    height: 315px;
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 20%;
+                    left: 50%;
+                }
+                .wis-image > img {
+                    width: 320px;
+                    height: 80px;
+                }
+                .qr-image > img {
+                    width: 281px;
+                    height: 286px;
+                }
+        
+                .qrcode{
+                    top:29px;
+                    left:40px;
+                    width: 205px;
+                    height: 204px;
+                    border-radius: 10px;
+                }
+        
+            </style>
+        </head>
+        
+        <body>
+            <table class="table" style="width:600px;">
+                <tbody style="height:233px;">
+                    <td style="padding:0; margin:0;"><img style="width:720px; height: 233px; margin:0; padding: 0; " src="http://localhost/qr_code_generator/assets/2.png"><img style="width:198px; height:194px; position:fixed; z-index:0; top:27px;left:17px; border-radius: 8px" src="'.$qrCodeDataUri.'"></td>
+                    <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;"><div style="width:150px;"><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:58.5px; color:white; margin-top: 56px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:9px; color:black; margin-bottom:50px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p></div></td>
+                </tbody>
+            </table>
+        </body>
+        </html>';
+    }
     
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ticket</title>
-        <!-- Bootstrap CDN  -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-        <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
-        <link href="https://printjs-4de6.kxcdn.com/print.min.css" rel="stylesheet">
-        <style>
-            * {
-                color: darkblue;
-            }
-            .bg-custom {
-                background-color: bisque;
-            }
-            .text-detail {
-                color: darkblue;
-                font-size: 20px;
-                font-weight: 600;
-                height: 43px;
-            }
-            .table-container {
-                width: 610px;
-                height: 315px;
-                position: absolute;
-                transform: translate(-50%, -50%);
-                top: 20%;
-                left: 50%;
-            }
-            .wis-image > img {
-                width: 320px;
-                height: 80px;
-            }
-            .qr-image > img {
-                width: 281px;
-                height: 286px;
-            }
-    
-            .qrcode{
-                top:29px;
-                left:40px;
-                width: 205px;
-                height: 204px;
-                border-radius: 10px;
-            }
-    
-        </style>
-    </head>
-    
-    <body>
-        <table class="table" style="width:600px;">
-            <tbody style="height:233px;">
-                <td style="padding:0; margin:0;"><img style="width:720px; height: 233px; margin:0; padding: 0; " src="http://localhost/qr_code_generator/assets/1.png"><img style="width:198px; height:194px; position:fixed; z-index:0; top:27px;left:17px; border-radius: 8px" src="'.$qrCodeDataUri.'"></td>
-                <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;"><div style="width:150px;"><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:58.5px; color:white; margin-top: 56px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p><p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:9px; color:black; margin-bottom:50px; margin-left:10px; border:solid 2px white; background-color:white;"> 001</p></div></td>
-            </tbody>
-        </table>
-    </body>
-    </html>';
 
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
