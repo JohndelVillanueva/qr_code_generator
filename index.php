@@ -21,6 +21,18 @@
         .input-text-box {
             opacity: 1 !important;
         }
+
+        .btn-customized {
+            color:white;
+            background-color: purple;
+            outline: solid 2px purple;
+        }
+
+        .btn-customized:hover{
+            color:purple;
+            background-color: transparent;
+            outline: solid 2px purple;
+        }
     </style>
 </head>
 
@@ -66,7 +78,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <input class="btn btn-outline-light btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">
+                    <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">
                 </div>
             </form>
         </div>
