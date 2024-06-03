@@ -9,23 +9,35 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 
 // Initialize counts
-$count = 0;
-$countVip = 0;
+$count1 = 0;
+$countVip1 = 0;
+$count2 = 0;
+$countVip2 = 0;
 
 // Read the current count from the files
 $countFile = 'ticket_count.txt';
 $countFileVip = 'ticket_countVIP.txt';
+$countFile2 = 'ticket_count2.txt';
+$countFileVip2 = 'ticket_countVIP2.txt';
 
 if (file_exists($countFile)) {
-    $count = (int)file_get_contents($countFile);
+    $count1 = (int)file_get_contents($countFile);
 }
 
 if (file_exists($countFileVip)) {
-    $countVip = (int)file_get_contents($countFileVip);
+    $countVip1 = (int)file_get_contents($countFileVip);
+}
+
+if (file_exists($countFile2)) {
+    $count2 = (int)file_get_contents($countFile2);
+}
+
+if (file_exists($countFileVip2)) {
+    $countVip2 = (int)file_get_contents($countFileVip2);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $seat_number = $_POST['seat_number'];
+    $seat_number = $_POST['seat_number'];//seat type
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -43,14 +55,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Generate QR code data with ticket number
-    if ($seat_number == 1) {
-        $normalTicket = $count + 1; // Temporarily increment for display
-        $codeContents = "Regular Ticket: $normalTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $normalTicket;
+    if ($seat_number == 1 && $attendance == 'day1') {
+        $normalTicket1 = $count1 + 1; // Temporarily increment for display
+        $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $normalTicket1;
+    } else if ($seat_number == 1 && $attendance === 'day2'){
+        $normalTicket2 = $count2 + 1; // Temporarily increment for display
+        $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $normalTicket2;
+    } else if ($seat_number == 2 && $attendance === 'day1'){
+        $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
+        $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $vipTicket1;
     } else {
-        $vipTicket = $countVip + 1; // Temporarily increment for display
-        $codeContents = "Premium Ticket: $vipTicket\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $vipTicket;
+        $vipTicket2 = $countVip2 + 1; // Temporarily increment for display
+        $codeContents = "Premium Ticket: $vipTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+        $ticketNumber = $vipTicket2;
     }
 
     $qrCode = QrCode::create($codeContents);
