@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $phone_number = $_POST['phone_number'];
+    $seatNumber = $_POST['seat_number'];
     // $attendance = $_POST['attend'];
 
     // Validate email address
@@ -55,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Generate QR code data with ticket number
-    $ticketNumber = $count1 + 1; // Temporarily increment for display
+    // $ticketNumber = $count1 + 1; // Temporarily increment for display
     
-    $codeContents = "Ticket: $ticketNumber\t $email\t $first_name $last_name\t $phone_number";
+    $codeContents = "Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number";
     // if ($seat_type == 1 && $attendance == 'day1') {
     //     $normalTicket1 = $count1 + 1; // Temporarily increment for display
     //     $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
@@ -94,18 +95,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Debugging statement
     // error_log("Ticket Type: " . $ticketType); // Log the ticket type
 
-    $pdfFilePath = generate_pdf($qrCodeDataUri, $ticketNumber, $first_name);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $seatNumber, $first_name);
 
     // Attempt to send email with PDF attachment
     $emailSent = send_email_with_pdf($email, $pdfFilePath);
 
     // If email sent successfully, increment the count
-    if ($emailSent) {
-        file_put_contents($countFile, $count1 + 1);
-    }
+    // if ($emailSent) {
+    //     file_put_contents($countFile, $count1 + 1);
+    // }
 }
 
-function generate_pdf($qrCodeDataUri, $ticketNumber, $first_name ) {
+function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
@@ -181,7 +182,7 @@ function generate_pdf($qrCodeDataUri, $ticketNumber, $first_name ) {
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:150px;">
                             <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:80px; color:white; margin-top: 52px; line-height:40px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p>
-                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> '. $ticketNumber .'</p>
+                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> '. $seatNumber .'</p>
                         </div>
                     </td>
                 </tbody>
@@ -196,7 +197,7 @@ function generate_pdf($qrCodeDataUri, $ticketNumber, $first_name ) {
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
     $output = $dompdf->output();
-    $pdfFilePath = 'images/ticket_' . $first_name . $ticketNumber . '.pdf';
+    $pdfFilePath = 'images/ticket_' . $first_name . $seatNumber . '.pdf';
 
     file_put_contents($pdfFilePath, $output);
 
@@ -230,6 +231,7 @@ function send_email_with_pdf($email, $pdfFilePath) {
 
         $mail->send();
         echo "Email has been sent successfully.";
+        // var_dump($_POST);
         header('location: index.php');
         return true;
     } catch (Exception $e) {

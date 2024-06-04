@@ -210,7 +210,7 @@
                                                 </div>
                                             </div>
                                             <div class="grid" id="grid">
-
+                                            <input type="hidden" id="seatNumber" name="seat_number">
                                             </div>
                                         </div>
                                     </div>
@@ -238,6 +238,8 @@
                                             console.log("Seat Class:", seatClass);
                                             selectedState += 1;
                                             lastseatID = seatID;
+
+                                            document.getElementById('seatNumber').value = seatID;
                                         }
 
 
