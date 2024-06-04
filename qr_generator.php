@@ -17,8 +17,8 @@ $countVip2 = 0;
 // Read the current count from the files
 $countFile = 'ticket_count.txt';
 $countFileVip = 'ticket_countVIP.txt';
-$countFile2 = 'ticket_count2.txt';
-$countFileVip2 = 'ticket_countVIP2.txt';
+// $countFile2 = 'ticket_count2.txt';
+// $countFileVip2 = 'ticket_countVIP2.txt';
 
 if (file_exists($countFile)) {
     $count1 = (int)file_get_contents($countFile);
@@ -28,13 +28,13 @@ if (file_exists($countFileVip)) {
     $countVip1 = (int)file_get_contents($countFileVip);
 }
 
-if (file_exists($countFile2)) {
-    $count2 = (int)file_get_contents($countFile2);
-}
+// if (file_exists($countFile2)) {
+//     $count2 = (int)file_get_contents($countFile2);
+// }
 
-if (file_exists($countFileVip2)) {
-    $countVip2 = (int)file_get_contents($countFileVip2);
-}
+// if (file_exists($countFileVip2)) {
+//     $countVip2 = (int)file_get_contents($countFileVip2);
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $seat_type = $_POST['seat_type'];//seat type
@@ -59,16 +59,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $normalTicket1 = $count1 + 1; // Temporarily increment for display
         $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
         $ticketNumber = $normalTicket1;
-    }  if ($seat_type == 1 && $attendance === 'day2'){
-        $normalTicket2 = $count2 + 1; // Temporarily increment for display
-        $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $normalTicket2;
-    }  if ($seat_type == 2 && $attendance === 'day1'){
-        $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
-        $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $vipTicket1;
+    // }  if ($seat_type == 1 && $attendance === 'day2'){
+    //     $normalTicket2 = $count2 + 1; // Temporarily increment for display
+    //     $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    //     $ticketNumber = $normalTicket2;
+    // }  if ($seat_type == 2 && $attendance === 'day1'){
+    //     $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
+    //     $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    //     $ticketNumber = $vipTicket1;
     } else {
-        $vipTicket2 = $countVip2 + 1; // Temporarily increment for display
+        $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
         $codeContents = "Premium Ticket: $vipTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
         $ticketNumber = $vipTicket2;
     }
