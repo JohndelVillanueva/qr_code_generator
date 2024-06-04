@@ -216,27 +216,26 @@
 
                                     <script>
                                         var selectedState = 0;
-                                        var lastseatID;
+                                        let lastseatID = null;
                                         function handleSeatClick(event) {
-                                            if (selectedState == 1) {
+                                            if (selectedState == 1 && lastseatID !== null) {
                                                 console.log("Already Stored an ID");
                                                 let lastSelectedSeat = document.getElementById(lastseatID);
                                                 console.log(lastSelectedSeat);
-                                                if (lastSelectedSeat == null) {
+                                                if (lastSelectedSeat) {
                                                     console.log("Triggered");
                                                     lastSelectedSeat.classList.remove('selected');
                                                 }
                                                 selectedState -= 1;
                                             }
                                             let seatName = event.target.getAttribute('name');
-                                            
+                                            let seatID = event.target.id;
                                             let seatClass = event.target.className;
                                             event.target.classList.add('selected');
                                             console.log("Seat Name:", seatName);
                                             console.log("Seat ID: ", seatID);
                                             console.log("Seat Class:", seatClass);
                                             selectedState += 1;
-                                            let seatID = event.target.id;
                                             lastseatID = seatID;
                                         }
 
