@@ -215,6 +215,14 @@
     </div>
 
     <script>
+        function handleSeatClick(event){
+            let seatName = event.target.getAttribute('name');
+            let seatID = event.target.id;
+            console.log("Seat Name:", seatName);
+            console.log("Seat ID: ", seatID);
+        }
+
+
         let grid = document.querySelector('#grid');
         // Seat Element Creation Loop
         for (let i = 1; i <= 272; i++) {
@@ -228,6 +236,7 @@
                 seat.setAttribute('name', 'seat'+i);
                 seat.id = 'seat' + i;
                 seat.textContent = 'Seat No: ' + i;
+                seat.addEventListener('click', handleSeatClick);
                 grid.appendChild(seat);
                 // Normal Seat Addition
             } else {
@@ -236,6 +245,7 @@
                 seat.setAttribute('name', 'seat'+i);
                 seat.id = 'seat' + i;
                 seat.textContent = 'Seat No: ' + i;
+                seat.addEventListener('click', handleSeatClick);
                 grid.appendChild(seat);
             }
             // Conditional for adding castseat class
