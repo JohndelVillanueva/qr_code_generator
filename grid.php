@@ -106,6 +106,7 @@
             } else {
                 let seat = document.createElement('div');
                 seat.className = 'seat';
+                seat.setAttribute('name', 'seat'+i);
                 seat.id = 'seat' + i;
                 seat.textContent = 'Seat No: ' + i;
                 grid.appendChild(seat);
