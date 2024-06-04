@@ -132,6 +132,7 @@
                     <div class="modal fade" id="assignseat" tabindex="-1" aria-labelledby="assignseat">
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
+                                <form action="index.php" method="POST">
                                 <div class="modal-header">
                                     <h1 class="modal-title fs-5">Assign Seat</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -288,11 +289,14 @@
                                                 seatid.classList.remove('seat');
                                             }
                                         }
+
+                                        document.getElementById()
                                     </script>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-success">Save Changes</button>
+                                    <button type="submit" class="btn btn-success">Save Changes</button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

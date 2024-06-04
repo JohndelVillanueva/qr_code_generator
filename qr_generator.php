@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $qrCodeDataUri = $result->getDataUri();
 
     // Debugging statement
-    error_log("Seat_type: " . $seat_type); // Log the seat number
+    // error_log("Seat_type: " . $seat_type); // Log the seat number
 
     // Generate PDF with the QR code
     // $normalTicketLabel = "Normal Ticket";
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $ticketType = $seat_type == 1 ? $normalTicketLabel : $vipTicketLabel;
 
     // Debugging statement
-    error_log("Ticket Type: " . $ticketType); // Log the ticket type
+    // error_log("Ticket Type: " . $ticketType); // Log the ticket type
 
     $pdfFilePath = generate_pdf($qrCodeDataUri, $ticketNumber, $first_name);
 
