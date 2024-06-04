@@ -99,9 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If email sent successfully, increment the count
     if ($emailSent) {
         if ($seat_type == 1) {
-            file_put_contents($countFile, $count1 + 1);
+            file_put_contents($countFile, $count1 + 001);
         } else {
-            file_put_contents($countFileVip, $countVip1 + 1);
+            file_put_contents($countFileVip, $countVip1 + 001);
         }
     }
 }
