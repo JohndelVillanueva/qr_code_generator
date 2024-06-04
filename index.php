@@ -95,8 +95,7 @@
                             </div>
                         </div>
 
-                        <div class="row col-12 mx-auto">
-
+                        <!-- <div class="row col-12 mx-auto">
                             <div class="col-8 m-auto">
                                 <label for="seat_no.">Seat Type:</label>
                                 <select name="seat_type" id="seat_type" class="form-select form-select-lg border border-2 rounded-0">
@@ -105,7 +104,7 @@
                                     <option value="2">Premium Seat</option>
                                 </select><br>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row col-12 mx-auto">
                         <div class="col-8 m-auto">

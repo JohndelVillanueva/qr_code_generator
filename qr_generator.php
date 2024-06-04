@@ -37,12 +37,12 @@ if (file_exists($countFileVip)) {
 // }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $seat_type = $_POST['seat_type'];//seat type
+    // $seat_type = $_POST['seat_type'];//seat type
     $email = $_POST['email'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $phone_number = $_POST['phone_number'];
-    $attendance = $_POST['attend'];
+    // $attendance = $_POST['attend'];
 
     // Validate email address
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -55,10 +55,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Generate QR code data with ticket number
-    if ($seat_type == 1 && $attendance == 'day1') {
-        $normalTicket1 = $count1 + 1; // Temporarily increment for display
-        $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $normalTicket1;
+    $ticketNumber = $count1 + 1; // Temporarily increment for display
+    
+    $codeContents = "Ticket: $ticketNumber\t $email\t $first_name $last_name\t $phone_number";
+    // if ($seat_type == 1 && $attendance == 'day1') {
+    //     $normalTicket1 = $count1 + 1; // Temporarily increment for display
+    //     $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    //     $ticketNumber = $normalTicket1;
     // }  if ($seat_type == 1 && $attendance === 'day2'){
     //     $normalTicket2 = $count2 + 1; // Temporarily increment for display
     //     $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
@@ -67,11 +70,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
     //     $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
     //     $ticketNumber = $vipTicket1;
-    } else {
-        $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
-        $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-        $ticketNumber = $vipTicket1;
-    }
+    // } else {
+    //     $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
+    //     $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    //     $ticketNumber = $vipTicket1;
+    // }
 
     $qrCode = QrCode::create($codeContents);
     $writer = new PngWriter();
@@ -84,29 +87,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     error_log("Seat_type: " . $seat_type); // Log the seat number
 
     // Generate PDF with the QR code
-    $normalTicketLabel = "Normal Ticket";
-    $vipTicketLabel = "VIP Ticket";
-    $ticketType = $seat_type == 1 ? $normalTicketLabel : $vipTicketLabel;
+    // $normalTicketLabel = "Normal Ticket";
+    // $vipTicketLabel = "VIP Ticket";
+    // $ticketType = $seat_type == 1 ? $normalTicketLabel : $vipTicketLabel;
 
     // Debugging statement
     error_log("Ticket Type: " . $ticketType); // Log the ticket type
 
-    $pdfFilePath = generate_pdf($qrCodeDataUri, $ticketNumber);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $ticketNumber, $first_name);
 
     // Attempt to send email with PDF attachment
     $emailSent = send_email_with_pdf($email, $pdfFilePath);
 
     // If email sent successfully, increment the count
     if ($emailSent) {
-        if ($seat_type == 1) {
-            file_put_contents($countFile, $count1 + 001);
-        } else {
-            file_put_contents($countFileVip, $countVip1 + 001);
-        }
+        file_put_contents($countFile, $count1 + 1);
     }
 }
 
-function generate_pdf($qrCodeDataUri, $ticketNumber ) {
+function generate_pdf($qrCodeDataUri, $ticketNumber, $first_name ) {
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
@@ -197,7 +196,8 @@ function generate_pdf($qrCodeDataUri, $ticketNumber ) {
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
     $output = $dompdf->output();
-    $pdfFilePath = 'images/ticket_' . uniqid() . '.pdf';
+    $pdfFilePath = 'images/ticket_' . $first_name . $ticketNumber . '.pdf';
+
     file_put_contents($pdfFilePath, $output);
 
     return $pdfFilePath;
