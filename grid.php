@@ -65,11 +65,23 @@
         color: white;
     }
 
+    .stage{
+        height: 200px;
+    }
+
 </style>
 
 <body>
     <div class="container-fluid p-0 m-0">
+
         <div class="row py-5 m-0 bg-dark">
+            <div class="col-12 mx-auto pb-5">
+                <div class="stage border border-2 border-light text-light d-flex justify-content-evenly align-items-center display-1">
+                    <p>Stage Area</p>
+                    <p>Stage Area</p>
+                    <p>Stage Area</p>
+                </div>
+            </div>
             <div class="grid" id="grid">
 
             </div>
