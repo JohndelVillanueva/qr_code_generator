@@ -128,10 +128,17 @@
                         <div class="col-8 m-auto">
                             <label for="cars">Choose Ticket Type:</label>
                             <select name="play" id="play" class="form-select form-select-lg">
+                                <option disabled hidden selected>Select Ticket Type</option>
                                 <option value="matinee">Matinee: 1:30pm</option>
                                 <option value="gala">Gala: 6:30pm</option>
                             </select>
-                        </div><br><br><br>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row col-12 mx-auto pb-4">
+                        <div class="col-8 mx-auto">
+                        <input type="text" disabled id="seatNumber" name="seat_number" class="col-8 form-control form-control-lg">
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-evenly align-items-center">
@@ -141,14 +148,11 @@
                     <div class="modal fade" id="assignseat" tabindex="-1" aria-labelledby="assignseat">
                         <div class="modal-dialog modal-fullscreen">
                             <div class="modal-content">
-                                <form action="index.php" method="POST">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5">Assign Seat</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-
-
                                         <style>
                                             .grid {
                                                 display: grid;
@@ -270,24 +274,26 @@
                                                 <div class="grid mb-4" id="grid">
                                                     <input type="hidden" id="seatNumber" name="seat_number">
                                                 </div>
-                                                <div class="grid mb-4" id="grid2">
-                                                    <input type="hidden" id="seatNumber2" name="seat_number2">
+                                                <div class="grid2 mb-4" id="grid2">
                                                 </div>
-                                                <div class="grid mb-4" id="grid3">
-                                                    <input type="hidden" id="seatNumber3" name="seat_number3">
+                                                <div class="grid3 mb-4" id="grid3">
                                                 </div>
                                             </div>
                                         </div>
 
+
                                         <script>
                                             var selectedState = 0;
                                             let lastseatID = null;
+                                            let selectedSeat = null;
 
                                             function handleSeatClick(event) {
                                                 if (selectedState == 1 && lastseatID !== null) {
                                                     console.log("Already Stored an ID");
                                                     let lastSelectedSeat = document.getElementById(lastseatID);
+                                                    let currentSeat = document.getElementById(selectedSeat);
                                                     console.log(lastSelectedSeat);
+                                                    console.log(currentSeat)
                                                     if (lastSelectedSeat) {
                                                         console.log("Triggered");
                                                         lastSelectedSeat.classList.remove('selected');
@@ -302,7 +308,12 @@
                                                 console.log("Seat ID: ", seatID);
                                                 console.log("Seat Class:", seatClass);
                                                 selectedState += 1;
+                                                // let seatNumber = document.getElementById('seat_number');
+                                                // seatNumber.value = seatName;
+                                                selectedSeat = seatName;
                                                 lastseatID = seatID;
+                                                // document.getElementById('seatNumber').value = seatID;
+                                                
                                             }
 
 
@@ -354,7 +365,6 @@
                                                 //     seatid.classList.remove('seat');
                                                 // }
                                             }
-
                                             let grid2 = document.querySelector('#grid2');
                                             // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
                                             for (let i = 113; i <= 184; i++) {
@@ -403,8 +413,6 @@
                                                 //     seatid.classList.remove('seat');
                                                 // }
                                             }
-
-
                                             let grid3 = document.querySelector('#grid3');
                                             // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
                                             for (let i = 185; i <= 272; i++) {
@@ -456,23 +464,43 @@
                                         </script>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success">Save Changes</button>
+                                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" id="generate" onclick="setSeat()">Generate Code</button>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>
-                    <!-- <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code"> -->
+                    <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">
                 </div>
             </form>
         </div>
     </div>
 </body>
 <script>
+    function setSeat(){
+        let seatNumber = document.getElementById('seatNumber');
+        seatNumber.value = selectedSeat;
+        console.log(seatNumber);
+    }
+
+    function confirmation() {
+        var fnameinput = document.getElementById("first_name").value;
+        var lnameinput = document.getElementById("last_name").value;
+        var numberinput = document.getElementById("phone_number").value;
+        var emailinput = document.getElementById("email").value;
+        var ticketselected = document.getElementById("play").value;
+        var seatselected = document.getElementById("seatNumber").value;
+
+        if (fnameinput.trim() !== "" && lnameinput.trim() !== "" && numberinput.trim() !== "" && emailinput.trim() !== "" && ticketselected.trim() !== ""){
+            var dialog = confirm("Generate a Ticket with the following information?\n Name: " + fnameinput + " " + lnameinput +"\n Contact Number: " + numberinput + "\n Email: " + emailinput + "\n Ticket Type: " + ticketselected + "\n Seat Number: " + seatselected);
+        } if (confirm) {
+            alert("Processing, please wait.....");
+
+        } else {
+        }
+    }
     document.getElementById("submit").addEventListener("click", function() {
         // Show the alert
         alert("Press Okay!");
     });
 </script>
-
 </html>
