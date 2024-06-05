@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdfFilePath = generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play);
 
     // Attempt to send email with PDF attachment
-    $emailSent = send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name);
+    $emailSent = send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name, $time);
 
     // If email sent successfully, increment the count
     // if ($emailSent) {
@@ -185,7 +185,7 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play)
                     </td>
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:200px;">
-                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-top: 5px; padding-bottom: 10px; padding-left:5px; padding-right:5px; text-transform:Capitalize; margin-top: 20px">'. $play .' Ticket</p>
+                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-top: 5px; padding-bottom: 10px; padding-left:5px; padding-right:5px; text-transform:Capitalize; text-wrap: nowrap;">'. $play .' Ticket</p>
                             <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-bottom: 5px; padding-left:5px; padding-right:5px; text-transform:Capitalize;">'.$time . '</p>
                             <p class="fw-bold text-center" style="font-size:16pt; width: 180px;; height:auto; color:white; line-height:40px; margin:auto; background-color:black; margin-bottom:0; padding-left:5px; padding-right:5px;"> Seat Number</p>
                             <p class="fw-bold text-center" style="font-size:20pt; width:180px; height:auto; padding-top:2px; color:black; margin:auto; background-color:white; padding-left:5px; padding-right:5px;"> ' . $seatNumber . '</p>
@@ -287,11 +287,11 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play)
     return $pdfFilePath;
 }
 
-function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name)
+function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name, $time)
 {
     $sender = 'noreply@westfields.edu.ph';
-    $subject = 'HELLO MR/MRS: ' . $first_name . " " . $last_name . " " . ' Here is your E-Ticket for INTO THE WOODS';
-    $body = 'Please keep the attached PDF containing your QR code. <b>CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
+    $subject =  'E-TICKET for INTO THE WOODS' . " " . $time ;
+    $body = '<b>HELLO ' . $first_name . " " . $last_name . " " . 'Please keep the attached PDF containing your QR code. .</b>';
 
     $mail = new PHPMailer(true);
 
