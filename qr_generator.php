@@ -185,7 +185,7 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play)
                     </td>
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
                         <div style="width:200px;">
-                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-top: 5px; padding-bottom: 10px; padding-left:5px; padding-right:5px; text-transform:Capitalize; text-wrap: nowrap;">'. $play .' Ticket</p>
+                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-top: 5px; padding-bottom: 10px; padding-left:5px; padding-right:5px; text-transform:Capitalize; margin-top: 20px">'. $play .' Ticket</p>
                             <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-bottom: 5px; padding-left:5px; padding-right:5px; text-transform:Capitalize;">'.$time . '</p>
                             <p class="fw-bold text-center" style="font-size:16pt; width: 180px;; height:auto; color:white; line-height:40px; margin:auto; background-color:black; margin-bottom:0; padding-left:5px; padding-right:5px;"> Seat Number</p>
                             <p class="fw-bold text-center" style="font-size:20pt; width:180px; height:auto; padding-top:2px; color:black; margin:auto; background-color:white; padding-left:5px; padding-right:5px;"> ' . $seatNumber . '</p>
