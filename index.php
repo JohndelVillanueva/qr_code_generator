@@ -124,6 +124,15 @@
                             <input class="form-control form-control-lg rounded-0 border border-2 " type="email" id="email" name="email" placeholder="Email Address: JohnDoe@gmail.com"><br>
                         </div>
                     </div>
+                    <div class="row col-12 mx-auto">
+                        <div class="col-8 m-auto">
+                            <label for="cars">Choose a Play:</label>
+                            <select name="play" id="play">
+                            <option value="matinee">Matinee 1:30pm</option>
+                            <option value="gala">Gala 6:30pm</option>
+                            </select>
+                        </div><br><br><br>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-evenly align-items-center">
                     <button type="button" class="btn btn-customized btn-lg rounded-0" data-bs-target="#assignseat" data-bs-toggle="modal"> Assign Seat</button>
@@ -453,8 +462,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code">
+                    <!-- <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" value="Generate QR Code"> -->
                 </div>
             </form>
         </div>

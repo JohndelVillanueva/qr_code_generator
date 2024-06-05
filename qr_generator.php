@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_name = $_POST['last_name'];
     $phone_number = $_POST['phone_number'];
     $seatNumber = $_POST['seat_number'];
+    $play = $_POST['play'];
     // $attendance = $_POST['attend'];
 
     // Validate email address
@@ -58,16 +59,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Generate QR code data with ticket number
     // $ticketNumber = $count1 + 1; // Temporarily increment for display
     
-    $codeContents = "Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number";
-    // if ($seat_type == 1 && $attendance == 'day1') {
-    //     $normalTicket1 = $count1 + 1; // Temporarily increment for display
-    //     $codeContents = "Regular Ticket: $normalTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-    //     $ticketNumber = $normalTicket1;
-    // }  if ($seat_type == 1 && $attendance === 'day2'){
-    //     $normalTicket2 = $count2 + 1; // Temporarily increment for display
-    //     $codeContents = "Regular Ticket: $normalTicket2\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-    //     $ticketNumber = $normalTicket2;
-    // }  if ($seat_type == 2 && $attendance === 'day1'){
+    // $codeContents = "Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number";
+    if ($play == 'matinee') {
+        $codeContents = "Matinee Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    }  
+    if ($play == 'gala') {
+        // $normalTicket2 = $count2 + 1; // Temporarily increment for display
+        $codeContents = "Gala Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number\t $attendance";
+    }  
+    // if ($seat_type == 2 && $attendance === 'day1'){
     //     $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
     //     $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
     //     $ticketNumber = $vipTicket1;
@@ -206,21 +206,7 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
 
 function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name) {
     $sender = 'noreply@westfields.edu.ph';
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    $subject = 'HELLO MR/MRS: '. $first_name ." ". $last_name. " ".' Here is your E-Ticket for INTO THE WOODS ENJOY!!!! 
-    ';
+    $subject = 'HELLO MR/MRS: '. $first_name ." ". $last_name. " ".' Here is your E-Ticket for INTO THE WOODS';
     $body = 'Please keep the attached PDF containing your QR code. <b>CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
 
     $mail = new PHPMailer(true);
