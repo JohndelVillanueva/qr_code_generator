@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdfFilePath = generate_pdf($qrCodeDataUri, $seatNumber, $first_name);
 
     // Attempt to send email with PDF attachment
-    $emailSent = send_email_with_pdf($email, $pdfFilePath);
+    $emailSent = send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name);
 
     // If email sent successfully, increment the count
     // if ($emailSent) {
@@ -204,9 +204,23 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
     return $pdfFilePath;
 }
 
-function send_email_with_pdf($email, $pdfFilePath) {
+function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name) {
     $sender = 'noreply@westfields.edu.ph';
-    $subject = 'E-Ticket: QR Code';
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    $subject = 'HELLO MR/MRS: '. $first_name ." ". $last_name. " ".' Here is your E-Ticket for INTO THE WOODS ENJOY!!!! 
+    ';
     $body = 'Please keep the attached PDF containing your QR code. <b>CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
 
     $mail = new PHPMailer(true);
