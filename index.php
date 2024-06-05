@@ -139,31 +139,54 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <style>
-                                        .grid {
-                                            display: grid;
-                                            grid-template-columns: auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto;
-                                            grid-template-rows: auto auto auto auto auto;
-                                            row-gap: auto;
-                                            column-gap: auto;
-                                            justify-content: center;
-                                            align-items: center;
-                                            width: 100%;
-                                            gap: 20px;
-                                        }
+                                    
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns:  auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto ;
+        grid-template-rows: auto auto auto auto auto auto auto;
+        row-gap: auto;
+        column-gap: auto;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+    }
 
-                                        .grid>.castseat {
-                                            background-color: purple;
-                                            border: 1px solid white;
-                                            padding: 20%;
-                                            height: auto;
-                                            width: auto;
-                                            color: white;
-                                            text-align: center;
+    .grid2 {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto;
+        row-gap: auto;
+        column-gap: auto;
+        width: 100%;
+        gap: 20px;
+    }
 
-                                        }
+    .grid3 {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto;
+        row-gap: auto;
+        column-gap: auto;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+    }
 
-                                        .grid>.vipseat {
+    .grid>.castseat {
+        background-color: purple;
+        border: 1px solid white;
+        padding: 20%;
+        height: auto;
+        width: auto;
+        color: white;
+        text-align: center;
+
+    }
+
+    /* .grid>.vipseat {
                                             background-color: orange;
                                             border: 1px solid white;
                                             padding: 20%;
@@ -171,129 +194,257 @@
                                             width: auto;
                                             color: white;
                                             text-align: center;
-                                        }
+                                        } */
 
-                                        .grid>.seat {
-                                            background-color: green;
-                                            border: 1px solid white;
-                                            padding: 15%;
-                                            height: auto;
-                                            width: auto;
-                                            color: white;
-                                            text-align: center;
-                                        }
+    .grid>.seat {
+        background-color: green;
+        border: 1px solid white;
+        padding: 15%;
+        height: auto;
+        width: auto;
+        color: white;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
 
-                                        .open {
-                                            background-color: green;
-                                            color: white;
-                                        }
+    .grid2>.seat {
+        background-color: green;
+        border: 1px solid white;
+        padding: 15%;
+        height: auto;
+        width: auto;
+        color: white;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
 
-                                        .selected {
-                                            background-color: brown !important;
-                                            color: white !important;
-                                            transition: 240ms linear;
-                                        }
+    .grid3>.seat {
+        background-color: green;
+        border: 1px solid white;
+        padding: 15%;
+        height: auto;
+        width: auto;
+        color: white;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
 
-                                        .stage {
-                                            height: 200px;
-                                        }
-                                    </style>
+    .open {
+        background-color: green;
+        color: white;
+    }
 
-                                    <div class="container-fluid p-0 m-0">
+    .selected {
+        background-color: brown !important;
+        color: white !important;
+        transition: 240ms linear;
+    }
 
-                                        <div class="row py-5 m-0 bg-dark">
-                                            <div class="col-12 mx-auto pb-5">
-                                                <div class="stage border border-2 border-light text-light d-flex justify-content-evenly align-items-center display-1">
-                                                    <p>Stage Area</p>
-                                                    <p>Stage Area</p>
-                                                    <p>Stage Area</p>
-                                                </div>
-                                            </div>
-                                            <div class="grid" id="grid">
-                                            <input type="hidden" id="seatNumber" name="seat_number">
-                                            </div>
-                                        </div>
-                                    </div>
+    .stage {
+        height: 200px;
+    }
+</style>
 
-                                    <script>
-                                        var selectedState = 0;
-                                        let lastseatID = null;
-                                        function handleSeatClick(event) {
-                                            if (selectedState == 1 && lastseatID !== null) {
-                                                console.log("Already Stored an ID");
-                                                let lastSelectedSeat = document.getElementById(lastseatID);
-                                                console.log(lastSelectedSeat);
-                                                if (lastSelectedSeat) {
-                                                    console.log("Triggered");
-                                                    lastSelectedSeat.classList.remove('selected');
-                                                }
-                                                selectedState -= 1;
-                                            }
-                                            let seatName = event.target.getAttribute('name');
-                                            let seatID = event.target.id;
-                                            let seatClass = event.target.className;
-                                            event.target.classList.add('selected');
-                                            console.log("Seat Name:", seatName);
-                                            console.log("Seat ID: ", seatID);
-                                            console.log("Seat Class:", seatClass);
-                                            selectedState += 1;
-                                            lastseatID = seatID;
+<div class="container-fluid p-0 m-0">
 
-                                            document.getElementById('seatNumber').value = seatID;
-                                        }
+    <div class="row py-5 m-0 bg-dark">
+        <div class="col-12 mx-auto pb-5">
+            <div class="stage border border-2 border-light text-light d-flex justify-content-evenly align-items-center display-1">
+                <p>Stage Area</p>
+                <p>Stage Area</p>
+                <p>Stage Area</p>
+            </div>
+        </div>
+        <div class="grid mb-4" id="grid">
+
+        </div>
+        <div class="grid2 mb-4" id="grid2">
+
+        </div>
+        <div class="grid3" id="grid3">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var selectedState = 0;
+    let lastseatID = null;
+
+    function handleSeatClick(event) {
+        if (selectedState == 1 && lastseatID !== null) {
+            console.log("Already Stored an ID");
+            let lastSelectedSeat = document.getElementById(lastseatID);
+            console.log(lastSelectedSeat);
+            if (lastSelectedSeat) {
+                console.log("Triggered");
+                lastSelectedSeat.classList.remove('selected');
+            }
+            selectedState -= 1;
+        }
+        let seatName = event.target.getAttribute('name');
+        let seatID = event.target.id;
+        let seatClass = event.target.className;
+        event.target.classList.add('selected');
+        console.log("Seat Name:", seatName);
+        console.log("Seat ID: ", seatID);
+        console.log("Seat Class:", seatClass);
+        selectedState += 1;
+        lastseatID = seatID;
+    }
 
 
-                                        let grid = document.querySelector('#grid');
-                                        // Seat Element Creation Loop
-                                        for (let i = 1; i <= 272; i++) {
-                                            // Seperator Addition 
-                                            if (i == 9 || i == 25 || i == 41 || i == 57 || i == 73 || i == 89 || i == 105 || i == 121 || i == 137 || i == 153 || i == 169 || i == 185 || i == 201 || i == 217 || i == 233 || i == 249 || i == 265) {
-                                                let seperator = document.createElement('div');
-                                                seperator.className = 'hidden';
-                                                grid.appendChild(seperator);
-                                                let seat = document.createElement('div');
-                                                seat.className = 'seat';
-                                                seat.setAttribute('name', i);
-                                                seat.id = i;
-                                                seat.textContent = 'Seat No: ' + i;
-                                                seat.addEventListener('click', handleSeatClick);
-                                                grid.appendChild(seat);
-                                                // Normal Seat Addition
-                                            } else {
-                                                let seat = document.createElement('div');
-                                                seat.className = 'seat';
-                                                seat.setAttribute('name', i);
-                                                seat.id = i;
-                                                seat.textContent = 'Seat No: ' + i;
-                                                seat.addEventListener('click', handleSeatClick);
-                                                grid.appendChild(seat);
-                                            }
-                                            // Conditional for adding castseat class
-                                            if (i >= 1 && i <= 64) {
-                                                let seatid = document.getElementById(i);
-                                                seatid.classList.add('castseat');
-                                                seatid.classList.remove('seat');
-                                            }
-                                            // // Conditional for adding castseat class
-                                            // else if (i >= 37 && i <= 44) {
-                                            //     let seatid = document.getElementById(i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            //     // Conditional for adding vipseat class
-                                            // } else if (i >= 33 && i <= 36) {
-                                            //     let seatid = document.getElementById(i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            //     // Conditional for adding vipseat class
-                                            // } else if (i >= 45 && i <= 80) {
-                                            //     let seatid = document.getElementById(i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
-                                        }
+    let grid = document.querySelector('#grid');
+    // Seat Element Creation Loop for First 7 rows
+    for (let i = 1; i <= 112; i++) {
+        // Seperator Addition 
+        if (i == 9 || i == 25 || i == 41 || i == 57 || i == 73 || i == 89 || i == 105) {
+            let seperator = document.createElement('div');
+            seperator.className = 'hidden';
+            grid.appendChild(seperator);
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name', i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid.appendChild(seat);
+            // Normal Seat Addition
+        } else {
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name',i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid.appendChild(seat);
+        }
+        // Conditional for adding castseat class
+        if (i >= 1 && i <= 64) {
+            let seatid = document.getElementById(i);
+            seatid.classList.add('castseat');
+            seatid.classList.remove('seat');
+        }
+        // // Conditional for adding castseat class
+        // else if (i >= 37 && i <= 44) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('castseat');
+        //     seatid.classList.remove('seat');
+        // Conditional for adding vipseat class
+        // } else if (i >= 33 && i <= 36) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        //     // Conditional for adding vipseat class
+        // } else if (i >= 45 && i <= 80) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        // }
+    }
 
-                                        document.getElementById()
-                                    </script>
+    let grid2 = document.querySelector('#grid2');
+    // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
+    for (let i = 113; i <= 184; i++) {
+        // Seperator Addition 
+        if (i == 122 || i == 140 || i == 158 || i == 176) {
+            let seperator = document.createElement('div');
+            seperator.className = 'hidden';
+            grid2.appendChild(seperator);
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name', i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid2.appendChild(seat);
+            // Normal Seat Addition
+        } else {
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name', i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid2.appendChild(seat);
+        }
+        // Conditional for adding castseat class
+        // if (i >= 1 && i <= 64) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('castseat');
+        //     seatid.classList.remove('seat');
+        // }
+        // // Conditional for adding castseat class
+        // else if (i >= 37 && i <= 44) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('castseat');
+        //     seatid.classList.remove('seat');
+        // Conditional for adding vipseat class
+        // } else if (i >= 33 && i <= 36) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        //     // Conditional for adding vipseat class
+        // } else if (i >= 45 && i <= 80) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        // }
+    }
+
+
+    let grid3 = document.querySelector('#grid3');
+    // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
+    for (let i = 185; i <= 272; i++) {
+        // Seperator Addition 
+        if (i == 196 || i == 218 || i == 240 || i == 262) {
+            let seperator = document.createElement('div');
+            seperator.className = 'hidden';
+            grid3.appendChild(seperator);
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name', i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid3.appendChild(seat);
+            // Normal Seat Addition
+        } else {
+            let seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.setAttribute('name', i);
+            seat.id = i;
+            seat.textContent = 'Seat No: ' + i;
+            seat.addEventListener('click', handleSeatClick);
+            grid3.appendChild(seat);
+        }
+        // Conditional for adding castseat class
+        // if (i >= 1 && i <= 64) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('castseat');
+        //     seatid.classList.remove('seat');
+        // }
+        // // Conditional for adding castseat class
+        // else if (i >= 37 && i <= 44) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('castseat');
+        //     seatid.classList.remove('seat');
+        // Conditional for adding vipseat class
+        // } else if (i >= 33 && i <= 36) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        //     // Conditional for adding vipseat class
+        // } else if (i >= 45 && i <= 80) {
+        //     let seatid = document.getElementById('seat' + i);
+        //     seatid.classList.add('vipseat');
+        //     seatid.classList.remove('seat');
+        // }
+    }
+</script>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success">Save Changes</button>
