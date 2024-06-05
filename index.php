@@ -137,7 +137,7 @@
                     <br>
                     <div class="row col-12 mx-auto pb-4">
                         <div class="col-8 mx-auto">
-                        <input type="text" disabled id="seatNumber" name="seat_number" class="col-8 form-control form-control-lg">
+                        <input type="text" readonly id="seatNumber" name="seat_number" class="col-8 form-control form-control-lg" placeholder="Assign Seat">
                         </div>
                     </div>
                 </div>
@@ -272,7 +272,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid mb-4" id="grid">
-                                                    <input type="hidden" id="seatNumber" name="seat_number">
                                                 </div>
                                                 <div class="grid2 mb-4" id="grid2">
                                                 </div>
