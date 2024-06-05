@@ -485,7 +485,7 @@
                             </div>
                         </div>
                     </div>
-                    <input class="btn btn-customized btn-lg rounded-0" id="submit" type="button" onclick="confirmation()" value="Generate QR Code">
+                    <input class="btn btn-customized btn-lg rounded-0" id="submit" type="submit" onclick="return confirmation()" value="Generate QR Code">
                 </div>
             </form>
         </div>
@@ -510,13 +510,15 @@
         if (fnameinput.trim() != "" && lnameinput.trim() != "" && numberinput.trim() != "" && emailinput.trim() != "" && ticketselected.trim() != "" && seatselected.trim() != "") {
             if (confirm("Generate a Ticket with the following information?\n Name: " + fnameinput + " " + lnameinput + "\n Contact Number: " + numberinput + "\n Email: " + emailinput + "\n Ticket Type: " + ticketselected + "\n Seat Number: " + seatselected) == true) {
                 alert("Processing, please wait.....");
-                window.location.replace('qr_generator.php');
+                return true;
             } else {
                 alert("Cancelled");
+                return false;
             }
         }
         else {
-            alert("Complete the form first") 
+            alert("Complete the form first");
+            return false;
         } 
 }
     // document.getElementById("submit").addEventListener("click", function() {
