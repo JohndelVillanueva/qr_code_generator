@@ -253,8 +253,8 @@
                                                 grid.appendChild(seperator);
                                                 let seat = document.createElement('div');
                                                 seat.className = 'seat';
-                                                seat.setAttribute('name', 'seat' + i);
-                                                seat.id = 'seat' + i;
+                                                seat.setAttribute('name', i);
+                                                seat.id = i;
                                                 seat.textContent = 'Seat No: ' + i;
                                                 seat.addEventListener('click', handleSeatClick);
                                                 grid.appendChild(seat);
@@ -262,34 +262,34 @@
                                             } else {
                                                 let seat = document.createElement('div');
                                                 seat.className = 'seat';
-                                                seat.setAttribute('name', 'seat' + i);
-                                                seat.id = 'seat' + i;
+                                                seat.setAttribute('name', i);
+                                                seat.id = i;
                                                 seat.textContent = 'Seat No: ' + i;
                                                 seat.addEventListener('click', handleSeatClick);
                                                 grid.appendChild(seat);
                                             }
                                             // Conditional for adding castseat class
-                                            if (i >= 1 && i <= 32) {
-                                                let seatid = document.getElementById('seat' + i);
+                                            if (i >= 1 && i <= 64) {
+                                                let seatid = document.getElementById(i);
                                                 seatid.classList.add('castseat');
                                                 seatid.classList.remove('seat');
                                             }
-                                            // Conditional for adding castseat class
-                                            else if (i >= 37 && i <= 44) {
-                                                let seatid = document.getElementById('seat' + i);
-                                                seatid.classList.add('castseat');
-                                                seatid.classList.remove('seat');
-                                                // Conditional for adding vipseat class
-                                            } else if (i >= 33 && i <= 36) {
-                                                let seatid = document.getElementById('seat' + i);
-                                                seatid.classList.add('vipseat');
-                                                seatid.classList.remove('seat');
-                                                // Conditional for adding vipseat class
-                                            } else if (i >= 45 && i <= 80) {
-                                                let seatid = document.getElementById('seat' + i);
-                                                seatid.classList.add('vipseat');
-                                                seatid.classList.remove('seat');
-                                            }
+                                            // // Conditional for adding castseat class
+                                            // else if (i >= 37 && i <= 44) {
+                                            //     let seatid = document.getElementById(i);
+                                            //     seatid.classList.add('castseat');
+                                            //     seatid.classList.remove('seat');
+                                            //     // Conditional for adding vipseat class
+                                            // } else if (i >= 33 && i <= 36) {
+                                            //     let seatid = document.getElementById(i);
+                                            //     seatid.classList.add('vipseat');
+                                            //     seatid.classList.remove('seat');
+                                            //     // Conditional for adding vipseat class
+                                            // } else if (i >= 45 && i <= 80) {
+                                            //     let seatid = document.getElementById(i);
+                                            //     seatid.classList.add('vipseat');
+                                            //     seatid.classList.remove('seat');
+                                            // }
                                         }
 
                                         document.getElementById()
