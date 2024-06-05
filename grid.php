@@ -14,7 +14,7 @@
 <style>
     .grid {
         display: grid;
-        grid-template-columns:  auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto ;
+        grid-template-columns: auto auto auto auto auto auto auto auto 5% auto auto auto auto auto auto auto auto;
         grid-template-rows: auto auto auto auto auto auto auto;
         row-gap: auto;
         column-gap: auto;
@@ -187,7 +187,7 @@
         } else {
             let seat = document.createElement('div');
             seat.className = 'seat';
-            seat.setAttribute('name',i);
+            seat.setAttribute('name', i);
             seat.id = i;
             seat.textContent = 'Seat No: ' + i;
             seat.addEventListener('click', handleSeatClick);

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'vendor/autoload.php'; // Load Composer's autoloader
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -58,15 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Generate QR code data with ticket number
     // $ticketNumber = $count1 + 1; // Temporarily increment for display
-    
+
     // $codeContents = "Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number";
     if ($play == 'matinee') {
         $codeContents = "Matinee Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-    }  
+    }
     if ($play == 'gala') {
         // $normalTicket2 = $count2 + 1; // Temporarily increment for display
         $codeContents = "Gala Ticket: $seatNumber\t $email\t $first_name $last_name\t $phone_number\t $attendance";
-    }  
+    }
     // if ($seat_type == 2 && $attendance === 'day1'){
     //     $vipTicket1 = $countVip1 + 1; // Temporarily increment for display
     //     $codeContents = "Premium Ticket: $vipTicket1\t $email\t $first_name $last_name\t $phone_number\t $attendance";
@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Debugging statement
     // error_log("Ticket Type: " . $ticketType); // Log the ticket type
 
-    $pdfFilePath = generate_pdf($qrCodeDataUri, $seatNumber, $first_name);
+    $pdfFilePath = generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play);
 
     // Attempt to send email with PDF attachment
     $emailSent = send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name);
@@ -106,7 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // }
 }
 
-function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
+function generate_pdf($qrCodeDataUri, $seatNumber, $first_name, $play)
+{
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $options->set('debugKeepTemp', TRUE);
@@ -114,7 +115,7 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
     $options->set('dpi', 120);
     $dompdf = new Dompdf($options);
     //Day 1
-        $html = '<!DOCTYPE html>
+    $html = '<!DOCTYPE html>
         <html lang="en">
         
         <head>
@@ -177,12 +178,14 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
                 <tbody style="height:233px;">
                     <td style="padding:0; margin:0;">
                         <img style="width:720px; height: 233px; margin:0; padding: 0;" src="http://localhost/qr_code_generator/assets/3.png">
-                        <img style="width:196px; height:195px; position:fixed; z-index:0; top:24px; left:16px; border-radius:8px" src="'.$qrCodeDataUri.'">
+                        <img style="width:196px; height:195px; position:fixed; z-index:0; top:24px; left:16px; border-radius:8px" src="' . $qrCodeDataUri . '">
                     </td>
                     <td style="padding:0; margin:0; background-color:#334e3b; border-left:2px; border-color:white;">
-                        <div style="width:150px;">
-                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:80px; color:white; margin-top: 52px; line-height:40px; margin-left:10px; border:solid 2px white; background-color:black; margin-bottom:0;"> Seat Number</p>
-                            <p class="fw-bold text-center" style="font-size:20pt; width:130px; height:50px; padding-top:2px; color:black; margin-top:0px; margin-left:10px; border:solid 2px white; background-color:white;"> '. $seatNumber .'</p>
+                        <div style="width:200px;">
+                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-top: 5px; padding-bottom: 10px; padding-left:5px; padding-right:5px; text-transform:Capitalize; text-wrap: nowrap;">'. $play .' Ticket</p>
+                            <p class="fw-bold text-center" style="font-size:14pt; width:180px; height:auto; color:white; line-height:30px; margin:auto; background-color:black; padding-bottom: 5px; padding-left:5px; padding-right:5px; text-transform:Capitalize;"> 1:30 PM</p>
+                            <p class="fw-bold text-center" style="font-size:16pt; width: 180px;; height:auto; color:white; line-height:40px; margin:auto; background-color:black; margin-bottom:0; padding-left:5px; padding-right:5px;"> Seat Number</p>
+                            <p class="fw-bold text-center" style="font-size:20pt; width:180px; height:auto; padding-top:2px; color:black; margin:auto; background-color:white; padding-left:5px; padding-right:5px;"> ' . $seatNumber . '</p>
                         </div>
                     </td>
                 </tbody>
@@ -190,8 +193,8 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
         </body>
         
         </html>';
-    
-    
+
+
 
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
@@ -204,9 +207,10 @@ function generate_pdf($qrCodeDataUri, $seatNumber, $first_name ) {
     return $pdfFilePath;
 }
 
-function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name) {
+function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name)
+{
     $sender = 'noreply@westfields.edu.ph';
-    $subject = 'HELLO MR/MRS: '. $first_name ." ". $last_name. " ".' Here is your E-Ticket for INTO THE WOODS';
+    $subject = 'HELLO MR/MRS: ' . $first_name . " " . $last_name . " " . ' Here is your E-Ticket for INTO THE WOODS';
     $body = 'Please keep the attached PDF containing your QR code. <b>CHECK THE SPAM OPTION IF THERE IS NO EMAIL RECEIVED.</b>';
 
     $mail = new PHPMailer(true);
@@ -244,6 +248,7 @@ function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -251,6 +256,7 @@ function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container mt-5">
         <h2>Book Your Ticket</h2>
