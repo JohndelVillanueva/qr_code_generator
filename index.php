@@ -117,16 +117,7 @@
                             <label for="last_name">Last Name:</label><br>
                             <input class="form-control form-control-lg rounded-0 border border-2 " type="text" id="last_name" name="last_name" placeholder="Last name: Doe"><br>
                         </div>
-                        <!-- <div class="row col-12 mx-auto">
-                            <div class="col-8 m-auto">
-                                <label for="seat_no.">Seat Type:</label>
-                                <select name="seat_type" id="seat_type" class="form-select form-select-lg border border-2 rounded-0">
-                                    <option value="" selected hidden disabled>Select Seat Type</option>
-                                    <option value="1">Regular Seat</option>
-                                    <option value="2">Premium Seat</option>
-                                </select><br>
-                            </div>
-                        </div> -->
+
                     </div>
                     <div class="row col-12 mx-auto">
                         <div class="col-8 m-auto">
@@ -216,15 +207,6 @@
 
                                         }
 
-                                        /* .grid>.vipseat {
-                                            background-color: orange;
-                                            border: 1px solid white;
-                                            padding: 20%;
-                                            height: auto;
-                                            width: auto;
-                                            color: white;
-                                            text-align: center;
-                                        } */
 
                                         .grid>.seat {
                                             background-color: green;
@@ -365,21 +347,6 @@
                                                 seatid.classList.remove('seat');
                                             }
                                             // // Conditional for adding castseat class
-                                            // else if (i >= 37 && i <= 44) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            // Conditional for adding vipseat class
-                                            // } else if (i >= 33 && i <= 36) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            //     // Conditional for adding vipseat class
-                                            // } else if (i >= 45 && i <= 80) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
                                         }
                                         let grid2 = document.querySelector('#grid2');
                                         // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
@@ -406,28 +373,6 @@
                                                 seat.addEventListener('click', handleSeatClick);
                                                 grid2.appendChild(seat);
                                             }
-                                            // Conditional for adding castseat class
-                                            // if (i >= 1 && i <= 64) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
-                                            // // Conditional for adding castseat class
-                                            // else if (i >= 37 && i <= 44) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            // Conditional for adding vipseat class
-                                            // } else if (i >= 33 && i <= 36) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            //     // Conditional for adding vipseat class
-                                            // } else if (i >= 45 && i <= 80) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
                                         }
                                         let grid3 = document.querySelector('#grid3');
                                         // Seat Element Creation Loop for the succeeding 4 rows with 9 seats
@@ -454,28 +399,6 @@
                                                 seat.addEventListener('click', handleSeatClick);
                                                 grid3.appendChild(seat);
                                             }
-                                            // Conditional for adding castseat class
-                                            // if (i >= 1 && i <= 64) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
-                                            // // Conditional for adding castseat class
-                                            // else if (i >= 37 && i <= 44) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('castseat');
-                                            //     seatid.classList.remove('seat');
-                                            // Conditional for adding vipseat class
-                                            // } else if (i >= 33 && i <= 36) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            //     // Conditional for adding vipseat class
-                                            // } else if (i >= 45 && i <= 80) {
-                                            //     let seatid = document.getElementById('seat' + i);
-                                            //     seatid.classList.add('vipseat');
-                                            //     seatid.classList.remove('seat');
-                                            // }
                                         }
                                     </script>
                                 </div>
@@ -512,7 +435,6 @@
                 alert("Processing, please wait.....");
                 return true;
             } else {
-                alert("Cancelled");
                 return false;
             }
         }
@@ -521,10 +443,6 @@
             return false;
         } 
 }
-    // document.getElementById("submit").addEventListener("click", function() {
-    //     // Show the alert
-    //     alert("Press Okay!");
-    // });
 </script>
 
 </html>
