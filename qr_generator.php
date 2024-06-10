@@ -300,7 +300,7 @@ function send_email_with_pdf($email, $pdfFilePath, $first_name, $last_name)
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = 'no-reply@westfields.edu.ph';
-        $mail->Password = 'kzeh yyam yhfr xrqh';
+        $mail->Password = 'ICTDepartment';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
